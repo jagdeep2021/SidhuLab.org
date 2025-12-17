@@ -1,0 +1,455 @@
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+/* === HEADER TOPBAR === */
+.header-topbar {
+  position : absolute;
+  /* position: fixed; */
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  backdrop-filter: blur(6px);
+  transition: all 0.4s ease;
+}
+.header-topbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.logo {
+  font-size: 2rem;
+  font-family: 'Garamond', serif;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.header-topbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  padding-right: 50px;
+}
+.header-topbar nav ul li a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-family: 'Georgia', serif;
+  transition: color 0.3s ease;
+}
+.header-topbar:not(.scrolled) a {
+  color: white;
+}
+.header-topbar.scrolled a {
+  color: #222;
+}
+
+/* === HAMBURGER === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+  z-index: 10000;
+}
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.header-topbar.scrolled .hamburger span {
+  background-color: #333;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* === HERO SECTION === */
+header {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+header video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+.hero-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
+  text-align: center;
+  max-width: 90%;
+  padding: 0 20px;
+}
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: bold;
+  font-family: 'Trebuchet MS', sans-serif;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+.hero-text p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+}
+
+/* === SECTION TEMPLATE: ABOUT / PRINCIPLES / GOALS === */
+.section-block {
+  position: relative;
+  padding: 5.5rem 0;
+  background-color: #fff;
+  overflow: visible;
+}
+.section-inner {
+  max-width: 1100px;
+  margin: 0 auto;
+  position: relative;
+}
+.section-block .bg-block {
+  position: absolute;
+  top: clamp(60px, 14vw, 160px);
+  left: clamp(10px, 5vw, 260px);
+  width: clamp(320px, 60vw, 660px);
+  height: clamp(220px, 75vw, 320px);
+  border-radius: 8px;
+  z-index: 0;
+}
+.section-block .section-image {
+  width: min(580px, 70%);
+  margin-left: clamp(40px, 8vw, 100px);
+  position: relative;
+  z-index: 1;
+}
+.section-block .section-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  display: block;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 0;
+}
+.section-block .section-card {
+  position: absolute;
+  right: clamp(20px, 6vw, 0px);
+  top: clamp(30px, 8vw, 60px);
+  width: clamp(280px, 36%, 400px);
+  background: #fff;
+  padding: 1.8rem;
+  border-radius: 6px;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.1);
+  z-index: 2;
+}
+.section-block .section-card h3 {
+  color: #4B3D63;
+  font-size: 1.9rem;
+  font-weight: 700;
+  font-family: 'Georgia', serif;
+  margin-bottom: 0.7rem;
+}
+.section-block .section-card p {
+  font-size: 1.05rem;
+  font-family: 'Georgia', serif;
+  color: #333;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 1rem;
+}
+
+/* === MOBILE FIX === */
+@media (max-width: 900px) {
+  .header-topbar { 
+    padding: 14px 22px; 
+    position: absolute;
+    top: 0;            
+    left: 0;
+  }
+  .hamburger { 
+    display: flex; margin-right: 40px; 
+  }
+  nav { 
+    display: none; 
+  }
+  .hero-text {
+    width: 300px !important; 
+    top: 45% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+  }
+  nav.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;       
+    align-items: center;
+    position: absolute;
+    top: 60px; left: 0;
+    width: 100%; height: auto;
+    z-index: 9998;
+    padding-top: 0;
+  }
+  nav.active ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  nav.active ul li a {
+    color: white !important;
+    font-size: 1rem;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+  }
+  nav.active ul li a:hover { color: #d9a78f; }
+
+  .section-block {
+    padding: 3rem 0 2.5rem 0 !important;
+  }
+  .section-block .bg-block {
+    position: absolute;
+    bottom: 18px;
+    left: 8%;
+    width: 84%;
+    height: 200px;
+    border-radius: 8px;
+    z-index: 0;
+  }
+  .section-block .section-image {
+    position: relative;
+    width: 88%;
+    margin: 0 auto;
+    z-index: 1;
+  }
+  .section-block .section-image img {
+    width: 100%;
+    max-width: 500px;
+    border-radius: 10px;
+    margin-top: 0;
+    margin-bottom: 0;
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.1);
+  }
+  .section-block .section-card {
+    width: 85%;
+    max-width: 500px;
+    position: relative;
+    margin: 1.2rem auto 0;
+    right: auto;
+    top: 0;
+    background: #fff;
+    padding: 1.4rem 1.2rem;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+  .section-block .section-card h3 {
+    font-size: 1.6rem;
+    text-align: center;
+    margin-top: 0.3rem;
+    margin-bottom: 0.6rem;
+  }
+  .section-block .section-card p {
+    font-size: 0.9rem;
+    line-height: 1.6;
+    text-align: justify;
+    margin-bottom: 0.8rem;
+  }
+}
+/* === Small phones === */
+@media (max-width: 480px) {
+  .hero-text h1 { font-size: 1.5rem; }
+  .hero-text p { font-size: 0.85rem; }
+  .logo { font-size: 1.4rem; }
+}
+</style>
+</head>
+
+<body>
+  <div class="header-topbar" id="topbar">
+    <div class="logo">Sidhu Lab</div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="people.html">People</a></li>
+        <!-- <li><a href="teaching.html">Teaching</a></li> -->
+        <li><a href="Latest News.html">Latest News</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <!-- HERO -->
+  <header>
+    <video autoplay muted loop playsinline>
+      <source src="videos/city-night-blur-01.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-text">
+      <h1>Science for a Sustainable Future :)</h1>
+      <p>Discovery of Effective and Efficient phenotypes.</p>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <div id="about" class="section-block">
+    <div class="section-inner">
+      <div class="bg-block" style="background-color: #f7cfc0;"></div>
+      <div class="section-image">
+        <img src="img/i9.jpg" alt="About Image">
+      </div>
+      <div class="section-card">
+        <h3>About</h3>
+        <p>Sidhu Lab explores how plant biology, data science, and climate resilience intersect—translating complex root and microbial 
+          responses into insights for sustainable agriculture.</p>
+        <p>Our research identifies traits that improve crop tolerance to drought and nutrient stress, using phenotyping and predictive 
+          modeling for resilient crop development.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GUIDING PRINCIPLES -->
+  <div id="principles" class="section-block">
+    <div class="section-inner">
+      <div class="bg-block" style="background-color: #e6dcda;"></div>
+      <div class="section-image">
+        <img src="img/i10.jpg" alt="Guiding Principles">
+      </div>
+      <div class="section-card">
+        <h3>Our Guiding Principles</h3>
+        <p>At Sidhu Lab, our mission is rooted in the belief that data is a tool for transformation. We apply advanced computational 
+          methods.</p>
+        <p>Our work thrives at the intersection of disciplines. We integrate plant physiology, genetics, engineering, and machine learning 
+          to tackle some of agriculture’s most pressing challenges.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- GOALS -->
+  <div id="goals" class="section-block">
+    <div class="section-inner">
+      <div class="section-image">
+        <img src="img/i11.jpeg" alt="Our Goals">
+      </div>
+      <div class="section-card">
+        <h3>Our Goals</h3>
+        <p>At Sidhu Lab, our mission is rooted in the belief that data is a tool for transformation. We apply advanced computational 
+          methods.</p>
+        <p>Our work thrives at the intersection of disciplines. We integrate plant physiology, genetics, engineering, and machine learning 
+          to tackle some of agriculture’s most pressing challenges.</p>
+      </div>
+    </div>
+  </div>
+  <section id="why-research" style="position: relative; height: 100vh; background: url('img/1.2.jpg') center/cover no-repeat;">
+  <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55);"></div>
+  <div style="position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; 
+      align-items: center; text-align: center; color: white; padding: 0 1.5rem;"> 
+    <h2 style=" font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; font-family: 'Playfair Display', serif; margin: 0 0 1.2rem 0;">
+      Why Our Research Matters?
+    </h2>
+    <p style="
+      font-size: clamp(0.9rem, 2vw, 1.1rem); line-height: 1.6; max-width: 700px; margin: 0 auto 2rem auto; font-family: 'Georgia', serif;">
+      Our research is rooted in innovation, collaboration, and impact. From improving root traits to exploring sustainable agriculture,
+      we invite you to explore the scientific journey behind our work.
+    </p>
+    <a href="research.html" style="
+      padding: 10px 24px; background-color: white; color: #4B3D63; border-radius: 6px; text-decoration: none; font-weight: bold;
+      font-family: 'Georgia', serif; font-size: 1rem; transition: all 0.3s ease; box-shadow: 0 6px 15px rgba(0,0,0,0.2);"> 
+      Explore Our Research </a>
+  </div>
+</section>
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-text">
+        <strong class="footer-lab-name">Sidhu Lab</strong> |
+        Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007
+      </div>
+    </div>
+    <a href="joinus.html" style="background-color:#d9a78f; color:white; padding:10px 24px; font-weight:bold; font-size:1.05rem;
+    text-decoration:none; border-radius:6px;"> Join Sidhu Lab →
+    </a>
+    <div class="footer-copy">
+      © 2025 Sidhu Lab. All rights reserved.
+    </div>
+  </div>
+</footer>
+<link rel="stylesheet" href="footer.css">
+
+<script>
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', () => {
+    topbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('.header-topbar nav');
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  });
+  document.querySelectorAll('.header-topbar nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="footer-container">
+ <div class="footer-top">
+      <div class="footer-text">
+        <strong class="footer-lab-name">Sidhu Lab</strong> |
+        Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007
+      </div>
+    </div>
+     <div class="footer-copy">
+      © 2025 Sidhu Lab. All rights reserved.
+    </div>
+    <a href="joinus.html" style="background-color:#d9a78f;color:white;padding:10px 24px;font-weight:bold;font-size:1.05rem;
+      text-decoration:none;border-radius:6px;">Join Sidhu Lab →
+    </a>
+  </div>
+</footer>
+<link rel="stylesheet" href="footer.css">
+</body>

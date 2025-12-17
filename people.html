@@ -1,0 +1,517 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+header {
+  position: relative; height: 100vh; background: url('img/4.1.jpg') center center/cover no-repeat; overflow: hidden;
+}
+
+/* === HEADER TOPBAR === */
+.header-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  backdrop-filter: blur(6px);
+  transition: all 0.4s ease;
+}
+.header-topbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.logo {
+  font-size: 2rem;
+  font-family: 'Garamond', serif;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.header-topbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  padding-right: 50px;
+}
+.header-topbar nav ul li a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-family: 'Georgia', serif;
+  transition: color 0.3s ease;
+}
+.header-topbar:not(.scrolled) a {
+  color: white;
+}
+.header-topbar.scrolled a {
+  color: #222;
+}
+
+/* === HAMBURGER === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+  z-index: 10000;
+}
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.header-topbar.scrolled .hamburger span {
+  background-color: #333;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* === HERO SECTION === */
+header {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+header video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+.hero-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
+  text-align: center;
+  max-width: 90%;
+  padding: 0 20px;
+}
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: bold;
+  font-family: 'Trebuchet MS', sans-serif;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+.hero-text p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+}
+
+/* === MOBILE FIX === */
+@media (max-width: 900px) {
+  .header-topbar { 
+    padding: 14px 22px; 
+    position: fixed;
+    top: 0;            
+    left: 0;
+  }
+  .hamburger { 
+    display: flex; margin-right: 40px; 
+  }
+  nav { 
+    display: none; 
+  }
+  .hero-text {
+    width: 300px !important; 
+    top: 45% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+  }
+  nav.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;       
+    align-items: center;
+    position: fixed;
+    top: 10px; left:90px;
+    width: 100%; height: 100%;
+    z-index: 9998;
+    padding-top: 100px;
+  }
+  nav.active ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  nav.active ul li a {
+    color: white !important;
+    font-size: 1rem;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+  }
+  nav.active ul li a:hover { color: #d9a78f; }
+}/* === PEOPLE PAGE MOBILE FIX === */
+@media(max-width:900px){
+
+  /* container becomes vertical */
+  .people-block,
+  div[style*="background-color: #f8f8f8; box-shadow"]{
+    flex-direction: column !important;
+    max-width: 92% !important;
+    margin: 40px auto !important;
+  }
+
+  /* reduce image width */
+  div[style*="flex: 0 0 280px;"] img{
+    width: 78% !important;
+    margin: 0 auto !important;
+    display: block !important;
+    border-radius: 6px !important;
+  }
+
+  /* text box padding tighter */
+  div[style*="flex: 1; padding: 1.5rem;"]{
+    padding: 1.2rem !important;
+    width: 92% !important;
+    margin: 0 auto !important;
+    border-top-width: 5px !important;
+  }
+
+  /* text typography cleaner */
+  div[style*="flex: 1; padding: 1.5rem;"] p{
+    font-size: 0.9rem !important;
+    line-height: 1.55 !important;
+    text-align: justify !important;
+    margin-bottom: .7rem !important;
+  }
+
+  /* heading smaller */
+  div[style*="flex: 1; padding: 1.5rem;"] h3{
+    font-size: 1.3rem !important;
+    margin-bottom: .5rem !important;
+  }
+}
+@media (max-width: 480px) {
+  .hero-text h1 { font-size: 1.5rem; }
+  .hero-text p { font-size: 0.85rem; }
+  .logo { font-size: 1.4rem; }
+}
+</style>
+
+<body >
+  <div class="header-topbar" id="topbar">
+  <div class="logo">Sidhu Lab</div>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="people.html">People</a></li>
+      <!-- <li><a href="teaching.html">Teaching</a></li> -->
+      <li><a href="Latest News.html">Latest News</a></li>
+    </ul>
+  </nav>
+  </div>
+
+  <header>
+  <div class="hero-text">
+    <h1>Meet the People of Sidhu Lab</h1>
+    <p>A collaborative collective of thinkers, doers, and dreamers-<br>advancing the frontiers of scientific understanding and human resilience.</p>
+  </div>
+  </header>
+
+<!-- People Section -->
+
+<div style="max-width: 950px; margin: 60px auto 40px auto;"><h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63;  
+     border-left: 6px solid #4B3D63; padding-left: 15px; margin-bottom: 0; text-align: left;"> Principal Investigator </h3></div>
+<div style="display: flex; align-items: flex-start; gap: 0; background-color: #f8f8f8; box-shadow: 0 4px 8px rgba(0,0,0,0.05); max-width: 1000px; margin: 60px auto; 
+padding: 0;">
+  <!-- Image -->
+  <div style="flex: 0 0 280px;"><img src="img/pi.png" alt="Dr. Jagdeep Singh Sidhu" style="width: 100%; height: auto; display: block; object-fit: cover;"></div>
+  <!-- Text Box -->
+  <div style="flex: 1; padding: 1.5rem; border-top: 7px solid #d4997d;">
+    <h3 style="font-size: 1.6rem; font-weight: bold; color: #000; margin: 0 0 0.4rem 0; font-family: 'Georgia', serif;">Dr. Jagdeep Singh Sidhu</h3>
+    <p style="font-style: italic; color: #000; margin-bottom: 1rem;">Principal Investigator</p>
+    <p style="color: #000; font-family: 'Georgia', serif;line-height: 1.7; text-align: justify;">Jagdeep Singh Sidhu is a Postdoctoral Scholar at South Dakota State University, 
+      researching root phenotypes and host genetics under abiotic stress. He is passionate about developing climate-resilient crops to address agricultural challenges
+      in the face of climate change.</br>
+    <a href="jagdeep.html" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background-color: #d9a78f; color: #fff; font-weight: bold; 
+    text-decoration: none; border-radius: 5px;"> View Full Profile →</p></a>
+  </div>
+</div>
+
+<div style="max-width: 950px; margin: 60px auto 40px auto;"><h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63;  
+     border-left: 6px solid #4B3D63; padding-left: 15px; margin-bottom: 0; text-align: left;">Grad Students</h3></div>
+
+<div style="display: flex; align-items:  flex-start; gap: 0;  background-color: #f8f8f8; box-shadow: 0 4px 8px rgba(0,0,0,0.05); max-width: 1000px; margin: 60px auto; padding: 0;">
+  <div style="flex: 0 0 280px;"><img src="img/amool.png" alt="Amool Singh Vadithya" style="width: 100%; height: auto; display: block; object-fit: cover;"></div>
+  <div style="flex: 1; padding: 1.5rem; border-top: 6px solid #d9a78f;">
+    <h3 style="font-size: 1.6rem; font-weight: bold; color: #000; font-family: 'Georgia', serif; margin: 0 0 0.4rem 0; ">Amool Singh Vadithya</h3>
+    <p style="font-style: italic; color: #000; margin-bottom: 1rem;">Ph.D. Student, Graduate Research Assistant</p>
+    <p style="color: #000; font-family: 'Georgia', serif;line-height: 1.7; text-align: justify;">Amool is a Ph.D. student in Agronomy, Horticulture, and Plant Science at South Dakota 
+      State University. His research focuses on improving drought and nitrogen stress tolerance in maize by increasing root cortical cell length.</br>
+    <a href="amool.html" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background-color: #d9a78f; color: #fff; font-weight: bold; 
+    text-decoration: none; border-radius: 5px;">View Full Profile →</p></a>
+  </div>
+</div>
+
+<div style="display: flex; align-items: flex-start; gap: 0; background-color: #f8f8f8; box-shadow: 0 4px 8px rgba(0,0,0,0.05); max-width: 1000px; margin: 60px auto;
+      padding: 0;">
+  <div style="flex: 0 0 280px;"><img src="img/ashish.jpg" alt="Ashish" style="width: 100%; height: auto; display: block; object-fit: cover;"></div>
+  <div style="flex: 1; padding: 1.5rem; border-top: 6px solid #d9a78f;">
+    <h3 style="font-size: 1.6rem; font-weight: bold; color: #000; font-family: 'Georgia', serif; margin: 0 0 0.4rem 0;">Ashish Chaudhary</h3>
+    <p style="font-style: italic; color: #000; margin-bottom: 1rem;">Ph.D. Student, Graduate Research Assistant</p>
+    <p style="color: #000; font-family: 'Georgia', serif;margin-bottom: 1rem;line-height: 1.7; text-align: justify;">Ashish is a Ph.D. student in Agronomy, Horticulture, and Plant Science at South 
+        Dakota State University. With a background in agriculture, aquaculture, and data science, he explores AI-driven strategies to enhance crop resilience and 
+        sustainability.</p>
+    <a href="ashish.html" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background-color: #d9a78f; color: #fff; font-weight: bold; 
+    text-decoration: none; border-radius: 5px;">View Full Profile →</a>
+  </div>
+</div>
+
+<div style="display: flex; align-items: flex-start; gap: 0; background-color: #f8f8f8; box-shadow: 0 4px 8px rgba(0,0,0,0.05); max-width: 1000px; margin: 60px auto;
+      padding: 0;">
+  <div style="flex: 0 0 280px;"><img src="img/jasleen.jpg" alt="Jasleen" style="width: 100%; height: auto; display: block; object-fit: cover;"></div>
+  <div style="flex: 1; padding: 1.5rem; border-top: 6px solid #d9a78f;">
+    <h3 style="font-size: 1.6rem; font-weight: bold; color: #000; font-family: 'Georgia', serif; margin: 0 0 0.4rem 0;">Jasleen Kaur</h3>
+    <p style="font-style: italic; color: #000; margin-bottom: 1rem;">Grad Student, Graduate Research Assistant</p>
+    <p style="color: #000; font-family: 'Georgia', serif;margin-bottom: 1rem;line-height: 1.7; text-align: justify;">Jasleen Kaur is a 
+      graduate researcher in Agronomy, Horticulture, and Plant Science at South Dakota State University. She studies maize–mycorrhizal 
+      fungi interactions to improve nutrient uptake and stress resilience for sustainable crop systems.</p>
+    <a href="jasleen.html" style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background-color: #d9a78f; color: #fff; font-weight: bold; 
+    text-decoration: none; border-radius: 5px;">View Full Profile →</a>
+  </div>
+</div>
+
+<!-- Alumni Section  -->
+<div style="max-width: 950px; margin: 60px auto 40px auto;">
+  <h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63; border-left: 6px solid #4B3D63; padding-left: 15px; margin-bottom: 0;
+   text-align: left;"> Alumni</h3>
+</div>
+
+<!-- People Card: Manju -->
+<div style="display: flex; align-items: flex-start; gap: 0; background-color: #f8f8f8; box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+     max-width: 1000px; margin: 60px auto; padding: 0;">
+
+  <div style="flex: 0 0 280px;">
+    <img src="img/manju.png" alt="Manju Sarvepalli"
+         style="width: 100%; height: auto; display: block; object-fit: cover;">
+  </div>
+
+  <div style="flex: 1; padding: 1.5rem; border-top: 6px solid #d9a78f;">
+    <h3 style="font-size: 1.6rem; font-weight: bold; color: #000; font-family: 'Georgia', serif; margin: 0 0 0.4rem 0;">
+      Manju Sarvepalli
+    </h3>
+
+    <p style="font-style: italic; color: #000; margin-bottom: 1rem;">
+      Graduate Student, Sidhu Lab
+    </p>
+
+    <p style="color: #000; font-family: 'Georgia', serif; margin-bottom: 1rem; line-height: 1.7; text-align: justify;">
+      Manju Sarvepalli is a master’s student in Computer Science at South Dakota State University and works with the Seed Technology Lab.
+      She supports the lab’s research website (Sidhu Lab) and is interested in data science, machine learning, and web design.
+    </p>
+
+    <a href="manju.html"
+       style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background-color: #d9a78f; color: #fff;
+              font-weight: bold; text-decoration: none; border-radius: 5px;">
+      View Full Profile →
+    </a>
+  </div>
+</div>
+
+<!-- People Card: Nisha -->
+<div style="display: flex; align-items: flex-start; gap: 0; background-color: #f8f8f8; box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+     max-width: 1000px; margin: 60px auto; padding: 0;">
+
+  <div style="flex: 0 0 280px;">
+    <img src="img/nisha.jpg" alt="Nisha Nepal"
+         style="width: 100%; height: auto; display: block; object-fit: cover;">
+  </div>
+
+  <div style="flex: 1; padding: 1.5rem; border-top: 6px solid #d9a78f;">
+    <h3 style="font-size: 1.6rem; font-weight: bold; color: #000; font-family: 'Georgia', serif; margin: 0 0 0.4rem 0;">
+      Nisha Nepal
+    </h3>
+
+    <p style="font-style: italic; color: #000; margin-bottom: 1rem;">
+      Graduate Student, Sidhu Lab
+    </p>
+
+    <p style="color: #000; font-family: 'Georgia', serif; margin-bottom: 1rem; line-height: 1.7; text-align: justify;">
+      Nisha Nepal is a Civil Engineering undergraduate student at South Dakota State University
+      with interests in structural design, infrastructure planning, and sustainable construction.
+      She contributes to research operations in the Seed Technology and Greenhouse facilities.
+    </p>
+
+    <a href="nisha.html"
+       style="display: inline-block; margin-top: 1rem; padding: 0.5rem 1rem; background-color: #d9a78f; color: #fff;
+              font-weight: bold; text-decoration: none; border-radius: 5px;">
+      View Full Profile →
+    </a>
+  </div>
+</div>
+
+<!-- ==== GALLERY  ==== -->
+<div style="max-width: 950px; margin: 60px auto 40px auto;">
+  <h3 style="font-size: 2rem; font-weight: 700; font-family:'Georgia', serif; color: #4B3D63; border-left: 6px solid #4B3D63; padding-left: 15px;
+   margin-bottom: 0; text-align: left;">Gallery</h3>
+</div>
+<section class="gallery-section" style="margin: 40px auto; max-width: 950px;">
+  <div class="gallery-slider">
+    <!-- Slides -->
+    <div class="gallery-slide active">
+      <img src="img/g1.jpg" alt="">
+    </div>
+
+    <div class="gallery-slide">
+      <img src="img/g2.jpg" alt="">
+    </div>
+
+    <div class="gallery-slide">
+      <img src="img/g3.png" alt="">
+    </div>
+
+    <div class="gallery-slide">
+      <img src="img/g4.jpg" alt="">
+    </div>
+
+    <div class="gallery-slide">
+      <img src="img/g5.jpg" alt="">
+    </div>
+
+    <div class="gallery-slide">
+      <img src="img/g6.jpg" alt="">
+    </div>
+
+  </div>
+</section>
+
+<style>
+  .gallery-slider {
+    position: relative;
+    width: 100%;
+    height: 440px;
+    overflow: hidden;
+    border-radius: 12px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .gallery-slide {
+    position: absolute;
+    inset: 0;
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.25s ease-in-out;  
+  }
+
+  .gallery-slide.active {
+    opacity: 1;
+  }
+
+  .gallery-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;   
+    background: white;
+  }
+</style>
+
+<script>
+(function() {
+  const slides = document.querySelectorAll('.gallery-slide');
+
+  let current = 0;
+  const intervalTime = 1300; 
+
+  function showSlide(index) {
+    slides[current].classList.remove('active');
+    current = (index + slides.length) % slides.length;
+    slides[current].classList.add('active');
+  }
+
+  function nextSlide() {
+    showSlide(current + 1);
+  }
+  setInterval(nextSlide, intervalTime);
+
+})();
+</script>
+<script>
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', () => {
+    topbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('.header-topbar nav');
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active'); 
+    hamburger.classList.toggle('active');
+  });
+  document.querySelectorAll('.header-topbar nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-text">
+        <strong class="footer-lab-name">Sidhu Lab</strong> |
+        Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007
+      </div>
+    </div>
+     <div class="footer-copy">
+      © 2025 Sidhu Lab. All rights reserved.
+    </div>
+    <a href="joinus.html" style="background-color:#d9a78f;color:white;padding:10px 24px;font-weight:bold;font-size:1.05rem;
+      text-decoration:none;border-radius:6px;">Join Sidhu Lab →
+    </a>
+  </div>
+</footer>
+<link rel="stylesheet" href="footer.css">
+</body>
+</html>

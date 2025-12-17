@@ -1,0 +1,241 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+/* === HEADER TOPBAR === */
+.header-topbar {
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.95);
+  color: black;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+.logo {
+  font-size: 2rem;
+  font-family: 'Garamond', serif;
+  font-weight: bold;
+  color: black;
+  white-space: nowrap;
+}
+
+.header-topbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  padding-right: 50px;
+}
+
+.header-topbar nav ul li a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-family: 'Georgia', serif;
+  color: black;
+  transition: color 0.3s ease;
+}
+
+.header-topbar nav ul li a:hover {
+  color: #d9a78f;
+}
+
+/* === HAMBURGER === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+  z-index: 10000;
+}
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background-color: black;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* === HERO SECTION === */
+header {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+header video {
+  transform: rotate(-90deg);
+  width: 100vh;
+  height: 100vw;
+  object-fit: cover;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(-90deg);
+  z-index: 0;
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: black;
+  text-align: center;
+  max-width: 90%;
+  padding: 0 20px;
+}
+
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: bold;
+  font-family: 'Trebuchet MS', sans-serif;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+}
+
+/* === FOOTER === */
+footer {
+  background-color: #f1f1f1;
+  border-top: 4px solid #d9a78f;
+  padding: 30px 20px;
+  font-family: 'Georgia', serif;
+  color: #333;
+}
+footer div {
+  flex-wrap: wrap;
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 40px;
+  flex-wrap: wrap;
+}
+
+/* === MOBILE VIEW === */
+@media (max-width: 900px) {
+  .hamburger { display: flex; }
+  nav { display: none; }
+  nav.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.95);
+    z-index: 5;
+  }
+  nav.active ul {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+    list-style: none;
+    margin: 0; padding: 0;
+  }
+  nav.active ul li a {
+    color: black !important;
+    font-size: 1.6rem;
+  }
+  .hero-text h1 { font-size: 1.8rem; }
+  .hero-text p { font-size: 1rem; }
+}
+</style>
+</head>
+<body>
+
+
+<div class="header-topbar" id="topbar">
+  <div class="logo">Sidhu Lab</div>
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="people.html">People</a></li>
+      <li><a href="teaching.html">Teaching</a></li>
+      <li><a href="Latest News.html">Latest News</a></li>
+    </ul>
+  </nav>
+</div>
+
+
+<header>
+  <video autoplay muted loop playsinline>
+    <source src="videos/5.6.mp4" type="video/mp4" />
+  </video>
+  <div class="hero-text">
+    <h1>Teaching? <span style="font-size:1.5rem;">Well... kinda.</span></h1>
+    <p>But No Boring Lectures, Promise!</p>
+  </div>
+</header>
+
+<section style="padding: 2rem 1rem; text-align: center;">
+  <h2 style="font-size: 1.5rem; font-weight: 600; margin: 0;">
+    Detailed teaching content will be available soon. Stay tuned!
+  </h2>
+</section>
+
+<footer>
+  <div>
+    <div><strong>Sidhu Lab</strong> | Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007</div>
+    <a href="joinus.html" style="background-color:#d9a78f;color:white;padding:10px 24px;font-weight:bold;font-size:1.05rem;text-decoration:none;border-radius:6px;">
+      Join Sidhu Lab →
+    </a>
+  </div>
+</footer>
+
+<script>
+  // Hamburger toggle
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('.header-topbar nav');
+
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  });
+
+  // Close menu when clicking a link
+  document.querySelectorAll('.header-topbar nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+  });
+</script>
+
+</body>
+</html> -->

@@ -1,0 +1,414 @@
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+    
+/* === HEADER TOPBAR === */
+.header-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  backdrop-filter: blur(6px);
+  transition: all 0.4s ease;
+}
+.header-topbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.logo {
+  font-size: 2rem;
+  font-family: 'Garamond', serif;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.header-topbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  padding-right: 50px;
+}
+.header-topbar nav ul li a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-family: 'Georgia', serif;
+  transition: color 0.3s ease;
+}
+.header-topbar:not(.scrolled) a {
+  color: white;
+}
+.header-topbar.scrolled a {
+  color: #222;
+}
+
+/* === HAMBURGER === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+  z-index: 10000;
+}
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.header-topbar.scrolled .hamburger span {
+  background-color: #333;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* === HERO SECTION === */
+header {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+header video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+.hero-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
+  text-align: center;
+  max-width: 90%;
+  padding: 0 20px;
+}
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: bold;
+  font-family: 'Trebuchet MS', sans-serif;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+.hero-text p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+}
+
+/* === MOBILE FIX === */
+@media (max-width: 900px) {
+  .header-topbar { 
+    padding: 14px 22px; 
+    position: fixed;
+    top: 0;            
+    left: 0;
+  }
+  .hamburger { 
+    display: flex; margin-right: 40px; 
+  }
+  nav { 
+    display: none; 
+  }
+  .hero-text {
+    width: 300px !important; 
+    top: 45% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+  }
+  nav.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;       
+    align-items: center;
+    position: fixed;
+    top: 10px; left:90px;
+    width: 100%; height: 100%;
+    z-index: 9998;
+    padding-top: 100px;
+  }
+  nav.active ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  nav.active ul li a {
+    color: white !important;
+    font-size: 1rem;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+  }
+  nav.active ul li a:hover { color: #d9a78f; 
+  }}
+  
+/* === Small phones === */
+@media (max-width: 480px) {
+  .hero-text h1 { font-size: 1.5rem; }
+  .hero-text p { font-size: 0.85rem; }
+  .logo { font-size: 1.4rem; }
+}    /* ===== THEMES CAROUSEL ===== */
+    .themes-wrapper {
+      background-color: white;
+      padding: 2rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      gap: 1rem;
+    }
+    .themes-window {
+      overflow: hidden;
+      max-width: 1140px;
+      padding: 1rem 0;
+    }
+    .themes-track {
+      display: flex;
+      gap: 2rem;           /* card gap */
+      will-change: transform;
+    }
+    .theme-card {
+      background-color: #f2f0f5;
+      border-top: 6px solid #d9a78f;
+      box-shadow: 0 0 30px rgba(0,0,0,0.05);
+      padding: 2rem;
+      width: 340px;
+      height: 600px;
+      flex: 0 0 auto;
+    }
+    .themes-arrow {
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 2rem;
+      color: #4B3D63;
+      cursor: pointer;
+      align-self: center;
+      user-select: none;
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Navbar -->
+  <div class="header-topbar" id="topbar">
+    <div class="logo">Sidhu Lab</div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="people.html">People</a></li>
+        <!-- <li><a href="teaching.html">Teaching</a></li> -->
+        <li><a href="Latest News.html">Latest News</a></li>
+      </ul>
+    </nav>
+  </div>
+
+  <header>
+    <video autoplay muted loop playsinline>
+      <source src="videos/research.video.mp4" type="video/mp4" />
+    </video>
+
+    <div class="hero-text">
+      <h1>Welcome to DeepLab Research</h1>
+      <p>Unlocking the secrets of plant resilience through the lens of structural-functional<br>
+         biology, evolutionary dynamics, and adaptive responses to abiotic stress.</p>
+    </div>
+  </header>
+
+  <div style="max-width: 1100px; margin: 60px auto 40px auto;">
+    <h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63; border-left: 6px solid #4B3D63; padding-left: 15px;">
+      Major Themes in Our Work
+    </h3>
+  </div>
+
+  <!-- ===== THEMES CAROUSEL SECTION ===== -->
+  <div class="themes-wrapper">
+    <button class="themes-arrow" onclick="scrollThemes(-1)">&#10094;</button>
+
+    <div class="themes-window">
+      <div id="themeTrack" class="themes-track">
+        <!-- Theme Card 1 -->
+        <div class="theme-card" onclick="window.location.href='Multiscale.html'" style="cursor: pointer;">
+          <h3 style="color: #2e6171; font-family: 'Georgia', serif;">Multiscale Structural-functional Biology</h3>
+          <p>We study plant structures at cellular, tissue, and organ levels.</p>
+          <img src="img/2.1.png" alt="Theme 1" style="width: 100%; font-family: 'Georgia', serif; height: 260px; object-fit: cover; 
+          border-radius: 10px; margin-top: 1.5rem;">
+        </div>
+
+        <!-- Theme Card 2 -->
+        <div class="theme-card">
+          <h3 style="color: #2e6171; font-family: 'Georgia', serif;">Abiotic Stress Resilience</h3>
+          <p>We focus on traits that help crops survive drought, heat, and nutrient stress to improve yields.</p>
+          <img src="img/2.2.jpg" alt="Theme 2" style="width: 100%;font-family: 'Georgia', serif; height: 260px; object-fit: cover; border-radius: 10px; margin-top: 1.5rem;">
+        </div>
+
+        <!-- Theme Card 3 -->
+        <div class="theme-card">
+          <h3 style="color: #2e6171; font-family: 'Georgia', serif;">Evolutionary Biology</h3>
+          <p>By studying plant evolution and wild ancestors, we reintroduce useful traits for modern crop performance.</p>
+          <img src="img/2.3.jpg" alt="Theme 3" style="width: 100%;font-family: 'Georgia', serif; height: 260px; object-fit: cover; border-radius: 10px; margin-top: 1.5rem;">
+        </div>
+
+        <!-- Theme Card 4 -->
+        <div class="theme-card">
+          <h3 style="color: #2e6171; font-family: 'Georgia', serif;">Local Adaptation</h3>
+          <p>We analyze how crops adapt to soil, temperature, and rainfall conditions to develop region-specific varieties.</p>
+          <img src="img/2.4.jpg" alt="Theme 4" style="width: 100%; height: 260px;font-family: 'Georgia', serif; object-fit: cover; border-radius: 10px; margin-top: 1.5rem;">
+        </div>
+      </div>
+    </div>
+
+    <button class="themes-arrow" onclick="scrollThemes(1)">&#10095;</button>
+  </div>
+
+  <!-- PUBLICATIONS CTA BANNER -->
+  <section style="position: relative; height: 100vh; background: url('img/2.5.jpg') center/cover no-repeat;">
+    <!-- Overlay -->
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.55);"></div>
+
+    <!-- Content -->
+    <div style="
+      position: relative; z-index: 2; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;
+      text-align: center; color: white; padding: 0 1.5rem;">
+      
+      <h2 style="font-size: clamp(1.8rem, 5vw, 3rem); font-weight: 800; font-family: 'Playfair Display', serif; margin: 0 0 1.2rem 0;">
+        Dive deeper into our publications.</h2>
+
+      <p style="font-size: clamp(0.9rem, 2vw, 1.1rem); line-height: 1.6; max-width: 700px; margin: 0 auto 2rem auto; font-family: 'Georgia', 
+        serif;">Our research is driven by passion, precision, and purpose. Explore the papers that made the most impact and shaped our 
+        scientific direction.</p>
+
+      <a href="publications.html" style="padding: 10px 24px; background-color: white; color: #4B3D63; border-radius: 6px;
+        text-decoration: none; font-family: 'Georgia', serif; font-size: 1rem; font-weight: bold; transition: all 0.3s ease;
+        box-shadow: 0 6px 15px rgba(0,0,0,0.2);">Explore Publications</a>
+    </div>
+  </section>
+
+<script>
+  const track = document.getElementById("themeTrack");
+
+  function getCardWidth() {
+    const card = track.querySelector(".theme-card");
+    if (!card) return 0;
+
+    const rect = card.getBoundingClientRect();
+    const style = window.getComputedStyle(track);
+    const gap = parseInt(style.gap) || 0;
+
+    return rect.width + gap;
+  }
+
+  function scrollThemes(direction) {
+    const cardWidth = getCardWidth();
+    if (!cardWidth) return;
+
+    // Scroll right →
+    if (direction === 1) {
+      track.style.transition = "transform 0.4s ease";
+      track.style.transform = `translateX(-${cardWidth}px)`;
+
+      setTimeout(() => {
+        const first = track.firstElementChild;
+        track.appendChild(first);
+
+        track.style.transition = "none";
+        track.style.transform = "translateX(0)";
+      }, 400);
+    }
+    
+    // Scroll left ←
+    else {
+      const last = track.lastElementChild;
+      track.insertBefore(last, track.firstElementChild);
+
+      track.style.transition = "none";
+      track.style.transform = `translateX(-${cardWidth}px)`;
+
+      requestAnimationFrame(() => {
+        track.style.transition = "transform 0.4s ease";
+        track.style.transform = "translateX(0)";
+      });
+    }
+  }
+</script>
+<script>
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', () => {
+    topbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('.header-topbar nav');
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  });
+  document.querySelectorAll('.header-topbar nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+  });
+</script>
+<footer class="site-footer">
+  <div class="footer-container">
+    <div class="footer-top">
+      <div class="footer-text">
+        <strong class="footer-lab-name">Sidhu Lab</strong> |
+        Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007
+      </div>
+    </div>
+     <div class="footer-copy">
+      © 2025 Sidhu Lab. All rights reserved.
+    </div>
+    <a href="joinus.html" style="background-color:#d9a78f;color:white;padding:10px 24px;font-weight:bold;font-size:1.05rem;
+      text-decoration:none;border-radius:6px;">Join Sidhu Lab →
+    </a>
+  </div>
+</footer>
+<link rel="stylesheet" href="footer.css">
+</body>
+</html>

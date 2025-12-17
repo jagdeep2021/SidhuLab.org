@@ -1,0 +1,450 @@
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+  html, body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  scroll-behavior: smooth;
+  scroll-padding-top: 120px;
+}
+
+/* === HEADER TOPBAR === */
+header {
+    position: relative; height: 100vh; background: url('img/3.jpg') center center/cover no-repeat; overflow: hidden;
+  }
+
+.header-topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 30px;
+  z-index: 9999;
+  background-color: rgba(255, 255, 255, 0.08);
+  color: white;
+  backdrop-filter: blur(6px);
+  transition: all 0.4s ease;
+}
+.header-topbar.scrolled {
+  background-color: rgba(255, 255, 255, 0.9);
+  color: #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.logo {
+  font-size: 2rem;
+  font-family: 'Garamond', serif;
+  font-weight: bold;
+  white-space: nowrap;
+}
+.header-topbar nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  padding-right: 50px;
+}
+.header-topbar nav ul li a {
+  text-decoration: none;
+  font-size: 1.2rem;
+  font-family: 'Georgia', serif;
+  transition: color 0.3s ease;
+}
+.header-topbar:not(.scrolled) a {
+  color: white;
+}
+.header-topbar.scrolled a {
+  color: #222;
+}
+
+/* === HAMBURGER === */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 6px;
+  z-index: 10000;
+}
+.hamburger span {
+  width: 26px;
+  height: 3px;
+  background-color: white;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+.header-topbar.scrolled .hamburger span {
+  background-color: #333;
+}
+.hamburger.active span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.hamburger.active span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger.active span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* === HERO SECTION === */
+header {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+header video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.45);
+  z-index: 1;
+}
+.hero-text {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  color: white;
+  text-align: center;
+  max-width: 90%;
+  padding: 0 20px;
+}
+.hero-text h1 {
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: bold;
+  font-family: 'Trebuchet MS', sans-serif;
+  line-height: 1.3;
+  margin-bottom: 1rem;
+}
+.hero-text p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  font-family: 'Georgia', serif;
+  line-height: 1.6;
+}
+
+/* === MOBILE FIX === */
+@media (max-width: 900px) {
+  .header-topbar { 
+    padding: 14px 22px; 
+    position: fixed;
+    top: 0;            
+    left: 0;
+  }
+  .hamburger { 
+    display: flex; margin-right: 40px; 
+  }
+  nav { 
+    display: none; 
+  }
+  .hero-text {
+    width: 300px !important; 
+    top: 45% !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    text-align: center !important;
+  }
+  nav.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;       
+    align-items: center;
+    position: fixed;
+    top: 10px; left:90px;
+    width: 100%; height: 100%;
+    z-index: 9998;
+    padding-top: 100px;
+  }
+  nav.active ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  nav.active ul li a {
+    color: white !important;
+    font-size: 1rem;
+    font-family: 'Georgia', serif;
+    text-decoration: none;
+  }
+  nav.active ul li a:hover { color: #d9a78f; }
+}
+/* === Small phones === */
+@media (max-width: 480px) {
+  .hero-text h1 { font-size: 1.5rem; }
+  .hero-text p { font-size: 0.85rem; }
+  .logo { font-size: 1.4rem; }
+}
+
+@media(max-width:900px){
+  .news-section > div {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .news-section img {
+    width: 100% !important;
+    max-width: 480px !important;
+    display: block;
+    margin: 0 auto 1.2rem auto !important;
+  }
+
+  .news-section h3 {
+    font-size: 1.5rem !important;
+    margin-bottom: .8rem !important;
+    padding-left: 0 !important;
+    border-left: none !important;
+  }
+
+  .news-section p{
+    font-size: .95rem !important;
+    line-height: 1.55 !important;
+    text-align: center !important;
+    padding: 0 10px !important;
+  }
+}
+
+    </style>
+
+<div class="header-topbar" id="topbar">
+<div class="logo">Sidhu Lab</div>
+<div class="hamburger"><span></span><span></span><span></span></div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="research.html">Research</a></li>
+      <li><a href="publications.html">Publications</a></li>
+      <li><a href="people.html">People</a></li>
+      <!-- <li><a href="teaching.html">Teaching</a></li> -->
+      <li><a href="Latest News.html">Latest News</a></li>
+    </ul>
+  </nav>
+</div>
+</head>
+<body>
+<header>
+  <div class="hero-text">
+        <h1>Latest News</h1>
+    <p></p>
+  </div>
+</header>
+<!-- === BACK + SEARCH BAR SECTION === -->
+<div id="search-container" style="max-width: 900px; margin: 2rem auto; text-align: center; display: flex; justify-content: center; gap: 10px;">
+  <!-- Back Button -->
+  <button 
+    onclick="goBack()" 
+    style="padding: 12px 20px; font-size: 1rem; background:#d9a78f; color:#fff; border:none; border-radius:6px; cursor:pointer;">
+    Back
+  </button>
+
+  <!-- Search Input -->
+  <input 
+    type="text" 
+    id="searchInput" 
+    placeholder="Search news..." 
+    onkeyup="filterSections()" 
+    style="width: 60%; padding: 12px; font-size: 1rem; border: 1px solid #ccc; border-radius: 6px; outline: none;">
+
+  <!-- Search Button (CLICK TO RUN) -->
+  <button 
+    id="searchBtn"
+    onclick="filterSections()" 
+    style="padding: 12px 20px; font-size: 1rem; background:#4B3D63; color:#fff; border:none; border-radius:6px; cursor:pointer;">
+    Search
+  </button>
+</div>
+<script>
+  document.getElementById('searchInput').addEventListener('keydown', function(e){
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      filterSections();
+    }
+  });
+</script>
+
+
+<!-- === WRAPPER for all sections === -->
+<div id="news-wrapper">
+
+  <div id="lab" class="news-section">
+    <div style="max-width: 1000px; margin: 4rem auto; display: flex; gap: 2rem; align-items: flex-start;">
+      
+      <div style="flex: 1;">
+        <h3 style="color: #4B3D63; font-size: 2rem; margin-bottom: 2rem;font-weight: 700; font-family: 'Georgia', serif; border-left: 6px solid #4B3D63; padding-left: 16px; margin-bottom: 1.5rem;">
+          Experimenting with Precision
+        </h3>
+        <p style="font-size: 1.1rem; font-family: 'Georgia', serif; color: #333; text-align: justify; margin-bottom: 1rem; line-height: 1.8;">
+          In the lab, our work transitions from field samples to analytical precision. Using curated root segments from the greenhouse, we conduct anatomical measurements, image analysis, and nutrient profiling. 
+        </p>
+        <p style="font-size: 1.1rem; font-family: 'Georgia', serif; color: #333; text-align: justify; margin-bottom: 1rem; line-height: 1.8;">
+          This phase enables us to decode traits like root cortical thickness, lateral branching, and aerenchyma formation — key indicators for resilience under environmental stress.
+        </p>
+      </div>
+      
+      <div style="flex: 1; position: relative;">
+        <div style="position: relative; overflow: hidden; border-radius: 8px;">
+          <img id="lab-img" src="img/lab1.jpg" style="width: 50%;left: 400; display: block;" alt="Lab Image" />
+        </div> 
+      </div>
+    </div>
+  </div>
+
+  <div id="explore" class="news-section">
+    <div style="max-width: 1000px; margin: 4rem auto; display: flex; gap: 2rem; align-items: flex-start;">
+      <!-- Left: Slideshow -->
+      <div style="flex: 1;">
+        
+      </div>
+
+      <!-- Right: Text content -->
+      <div style="flex: 2;">
+        <h3 style="color: #4B3D63; font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; border-left: 6px solid #4B3D63; padding-left: 16px; margin-bottom: 2rem;">
+          Root Phenotyping Initiative
+        </h3>
+        <p style="font-size: 1.1rem; font-family: 'Georgia', serif; color: #333; text-align: justify; line-height: 1.8; margin-bottom: 1rem;">
+          Sidhu Lab’s ongoing research explores how maize root systems respond to varying environmental stresses. By capturing and comparing seedling development over time, we aim to identify heritable traits that can improve crop adaptation to drought and nutrient deficiency.
+        </p>
+        <div style="width: 80%; border-radius: 6px; overflow: hidden;">
+          <img id="root-slideshow" src="img/1.3.jpg" alt="Growth Slideshow" style="width: 100%; height: auto; border-radius: 4px;">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="greenhouse" class="news-section">
+    <div style="max-width: 1000px; margin: 4rem auto;">
+      <h3 style="color: #4B3D63; font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; border-left: 6px solid #4B3D63; 
+      padding-left: 16px; margin-bottom: 2rem;">Planting the First Seeds</h3>
+      
+      <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+        <!-- Text -->
+        <div style="flex: 1; min-width: 300px;">
+          <p style="font-size: 1.1rem; font-family: 'Georgia', serif; color: #333; text-align: justify; margin-bottom: 1rem; line-height: 1.8;">
+            Our greenhouse is where early-stage fieldwork begins. From preparing soil trays to planting tagged seeds, every step ensures 
+            controlled growth conditions to test maize root responses under drought and nutrient limitations.
+          </p>
+          <p style="font-size: 1.1rem; font-family: 'Georgia', serif; color: #333; text-align: justify; margin-bottom: 1rem; line-height: 1.8;">
+            Here, the team meticulously organizes trials with color-coded markers and treatments, laying the foundation for high-resolution 
+            phenotyping and downstream data analysis in the lab.
+          </p>
+        </div>
+
+        <!-- Image Carousel -->
+        <div style="flex: 1; min-width: 300px; position: relative;">
+          <div id="carousel-container" style="overflow: hidden; position: relative;">
+            <div id="carousel-track" style="display: flex; transition: transform 0.5s ease;">
+              <img src="img/gh.1.jpg" style="width: 100%; border-radius: 8px; flex-shrink: 0;">
+              <img src="img/gh.2.jpg" style="width: 100%; border-radius: 8px; flex-shrink: 0;">
+            </div>
+          </div>
+          <!-- Arrows -->
+          <button onclick="scrollCarousel(-1)" style="position: absolute; top: 50%; left: -25px; transform: translateY(-50%);
+            background-color: #E6E6FA; border: none; border-radius: 50%; width: 36px; height: 36px;
+            font-size: 20px; font-weight: bold; color: #4B3D63; box-shadow: 0 2px 6px rgba(0,0,0,0.15); cursor: pointer;">‹</button>
+
+          <button onclick="scrollCarousel(1)" style="position: absolute; top: 50%; right: -25px; transform: translateY(-50%);
+            background-color: #E6E6FA; border: none; border-radius: 50%; width: 36px; height: 36px;
+            font-size: 20px; font-weight: bold; color: #4B3D63; box-shadow: 0 2px 6px rgba(0,0,0,0.15); cursor: pointer;">›</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div> 
+<script>
+function filterSections() {
+  const input = document.getElementById("searchInput").value.toLowerCase().trim();
+  const wrapper = document.getElementById("news-wrapper");
+  const sections = wrapper.getElementsByClassName("news-section");
+
+  if (!input) {
+    for (let sec of sections) sec.style.display = "block";
+    return;
+  }
+
+  for (let sec of sections) {
+    const text = sec.innerText.toLowerCase();
+    const altText = Array.from(sec.getElementsByTagName("img"))
+                        .map(img => img.alt.toLowerCase())
+                        .join(" ");
+    if (text.includes(input) || altText.includes(input)) {
+      sec.style.display = "block";  // show matches
+    } else {
+      sec.style.display = "none";   // hide non-matches
+    }
+  }
+}
+
+// === BACK BUTTON FUNCTION ===
+function goBack() {
+  document.getElementById("searchInput").value = "";  // clear the search box
+  const sections = document.getElementsByClassName("news-section");
+  for (let sec of sections) {
+    sec.style.display = "block"; // show all sections again
+  }
+}
+
+// Allow pressing Enter to trigger search
+document.getElementById('searchInput').addEventListener('keydown', function(e){
+  if (e.key === 'Enter') {
+    e.preventDefault();
+    filterSections();
+  }
+});
+</script>
+<script>
+  const topbar = document.getElementById('topbar');
+  window.addEventListener('scroll', () => {
+    topbar.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  const hamburger = document.querySelector('.hamburger');
+  const nav = document.querySelector('.header-topbar nav');
+  hamburger.addEventListener('click', () => {
+    nav.classList.toggle('active');
+    hamburger.classList.toggle('active');
+  });
+  document.querySelectorAll('.header-topbar nav a').forEach(link => {
+    link.addEventListener('click', () => {
+      nav.classList.remove('active');
+      hamburger.classList.remove('active');
+    });
+  });
+</script>
+
+<footer class="site-footer">
+  <div class="footer-container">
+ <div class="footer-top">
+      <div class="footer-text">
+        <strong class="footer-lab-name">Sidhu Lab</strong> |
+        Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007
+      </div>
+    </div>
+     <div class="footer-copy">
+      © 2025 Sidhu Lab. All rights reserved.
+    </div>
+    <a href="joinus.html" style="background-color:#d9a78f;color:white;padding:10px 24px;font-weight:bold;font-size:1.05rem;
+      text-decoration:none;border-radius:6px;">Join Sidhu Lab →
+    </a>
+  </div>
+</footer>
+<link rel="stylesheet" href="footer.css">
+</body>
+</html>
