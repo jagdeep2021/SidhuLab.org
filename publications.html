@@ -1,566 +1,861 @@
+<!DOCTYPE html>
 <html>
-<head><head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: 'Open Sans', sans-serif;
-  scroll-behavior: smooth;
-  scroll-padding-top: 120px;
-}
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Open Sans', sans-serif;
+      scroll-behavior: smooth;
+      scroll-padding-top: 120px;
+    }
 
-/* === HEADER TOPBAR === */
-.header-topbar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 18px 30px;
-  z-index: 9999;
-  background-color: rgba(255, 255, 255, 0.08);
-  color: white;
-  backdrop-filter: blur(6px);
-  transition: all 0.4s ease;
-}
-.header-topbar.scrolled {
-  background-color: rgba(255, 255, 255, 0.9);
-  color: #000;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
-}
-.logo {
-  font-size: 2rem;
-  font-family: 'Garamond', serif;
-  font-weight: bold;
-  white-space: nowrap;
-}
-.header-topbar nav ul {
-  list-style: none;
-  display: flex;
-  gap: 30px;
-  margin: 0;
-  padding: 0;
-  padding-right: 50px;
-}
-.header-topbar nav ul li a {
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-family: 'Georgia', serif;
-  transition: color 0.3s ease;
-}
-.header-topbar:not(.scrolled) a {
-  color: white;
-}
-.header-topbar.scrolled a {
-  color: #222;
-}
+    /* === HEADER TOPBAR === */
+    .header-topbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 30px;
+      z-index: 9999;
+      background-color: rgba(255, 255, 255, 0.08);
+      color: white;
+      backdrop-filter: blur(6px);
+      transition: all 0.4s ease;
+    }
+    .header-topbar.scrolled {
+      background-color: rgba(255, 255, 255, 0.9);
+      color: #000;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+    }
+    .logo {
+      font-size: 2rem;
+      font-family: 'Garamond', serif;
+      font-weight: bold;
+      white-space: nowrap;
+    }
+    .header-topbar nav ul {
+      list-style: none;
+      display: flex;
+      gap: 30px;
+      margin: 0;
+      padding: 0;
+      padding-right: 50px;
+    }
+    .header-topbar nav ul li a {
+      text-decoration: none;
+      font-size: 1.2rem;
+      font-family: 'Georgia', serif;
+      transition: color 0.3s ease;
+    }
+    .header-topbar:not(.scrolled) a { color: white; }
+    .header-topbar.scrolled a { color: #222; }
 
-/* === HAMBURGER === */
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 6px;
-  z-index: 10000;
-}
-.hamburger span {
-  width: 26px;
-  height: 3px;
-  background-color: white;
-  border-radius: 2px;
-  transition: all 0.3s ease;
-}
-.header-topbar.scrolled .hamburger span {
-  background-color: #333;
-}
-.hamburger.active span:nth-child(1) {
-  transform: rotate(45deg) translate(5px, 5px);
-}
-.hamburger.active span:nth-child(2) {
-  opacity: 0;
-}
-.hamburger.active span:nth-child(3) {
-  transform: rotate(-45deg) translate(5px, -5px);
-}
+    /* === HAMBURGER === */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      cursor: pointer;
+      gap: 6px;
+      z-index: 10000;
+    }
+    .hamburger span {
+      width: 26px;
+      height: 3px;
+      background-color: white;
+      border-radius: 2px;
+      transition: all 0.3s ease;
+    }
+    .header-topbar.scrolled .hamburger span { background-color: #333; }
+    .hamburger.active span:nth-child(1) { transform: rotate(45deg) translate(5px, 5px); }
+    .hamburger.active span:nth-child(2) { opacity: 0; }
+    .hamburger.active span:nth-child(3) { transform: rotate(-45deg) translate(5px, -5px); }
 
-/* === HERO SECTION === */
-header {
-  position: relative;
-  height: 100vh;
-  overflow: hidden;
-  background: url('img/p.0.jpg') center center/cover no-repeat; 
-}
-header video {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  z-index: 0;
-}
-header::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-color: rgba(0, 0, 0, 0.45);
-  z-index: 1;
-}
-.hero-text {
-  position: absolute;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 2;
-  color: white;
-  text-align: center;
-  max-width: 90%;
-  padding: 0 20px;
-}
-.hero-text h1 {
-  font-size: clamp(2rem, 4vw, 3.2rem);
-  font-weight: bold;
-  font-family: 'Trebuchet MS', sans-serif;
-  line-height: 1.3;
-  margin-bottom: 1rem;
-}
-.hero-text p {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  font-family: 'Georgia', serif;
-  line-height: 1.6;
-}
+    /* === HERO SECTION === */
+    header {
+      position: relative;
+      height: 100vh;
+      overflow: hidden;
+      background: url('img/p.0.jpg') center center/cover no-repeat;
+    }
+    header::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: rgba(0, 0, 0, 0.45);
+      z-index: 1;
+    }
+    .hero-text {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 2;
+      color: white;
+      text-align: center;
+      max-width: 90%;
+      padding: 0 20px;
+    }
+    .hero-text h1 {
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: bold;
+      font-family: 'Trebuchet MS', sans-serif;
+      line-height: 1.3;
+      margin-bottom: 1rem;
+    }
+    .hero-text p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      font-family: 'Georgia', serif;
+      line-height: 1.6;
+    }
 
-/* === MOBILE FIX === */
-@media (max-width: 900px) {
-  .header-topbar { 
-    padding: 14px 22px; 
-    position: fixed;
-    top: 0;            
-    left: 0;
-  }
-  .hamburger { 
-    display: flex; margin-right: 40px; 
-  }
-  nav { 
-    display: none; 
-  }
-  .hero-text {
-    width: 300px !important; 
-    top: 45% !important;
-    left: 50% !important;
-    transform: translateX(-50%) !important;
-    text-align: center !important;
-  }
-  nav.active {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;       
-    align-items: center;
-    position: fixed;
-    top: 10px; left:90px;
-    width: 100%; height: 100%;
-    z-index: 9998;
-    padding-top: 100px;
-  }
-  nav.active ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.6rem;
-  }
-  nav.active ul li a {
-    color: white !important;
-    font-size: 1rem;
-    font-family: 'Georgia', serif;
-    text-decoration: none;
-  }
-  nav.active ul li a:hover { color: #d9a78f; }
+    /* ===== KEY PUBLICATIONS (same carousel behavior as Research) ===== */
+    .pubs-wrapper {
+      background-color: white;
+      padding: 1.6rem 0 2.2rem 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      gap: 1rem;
+    }
+    .pubs-window {
+      overflow: hidden;
+      /* show exactly ~3 cards */
+      width: min(1040px, calc(100vw - 140px));
+      padding: 0.75rem 0;
+    }
+    .pubs-track {
+      display: flex;
+      gap: 1.6rem;
+      will-change: transform;
+    }
+    .pub-card {
+      background-color: #E6E6FA;
+      border-radius: 14px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+      padding: 1.4rem 1.4rem 1.2rem 1.4rem;
+      width: 320px;          /* fixed so only 3 fit in window */
+      flex: 0 0 auto;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 420px;     /* smaller than your big one */
+      line-height: 1.35;
+    }
+    .pub-card h3{
+      margin: 0 0 0.75rem 0;
+      color: #2e6171;
+      font-family: 'Georgia', serif;
+      font-size: 1.1rem;
+      line-height: 1.25;
+    }
+    .pub-card h3 a{
+      color: #2e6171;
+      text-decoration: none;
+    }
+    .pub-card p{
+      margin: 0 0 0.75rem 0;
+      font-size: 0.98rem;
+    }
+    .pub-card .pub-img{
+      width: 100%;
+      height: 210px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-top: 0.8rem;
+      background: rgba(0,0,0,0.03);
+    }
+    .pubs-arrow {
+      background: none;
+      border: none;
+      outline: none;
+      font-size: 2.2rem;
+      color: #4B3D63;
+      cursor: pointer;
+      user-select: none;
+      padding: 0.25rem 0.75rem;
+      line-height: 1;
+    }
 
-}
-/* === Small phones === */
-@media (max-width: 480px) {
-  .hero-text h1 { font-size: 1.5rem; }
-  .hero-text p { font-size: 0.85rem; }
-  .logo { font-size: 1.4rem; }
-}
- 
-@media(max-width: 768px){
+    /* === All Publications list styles === */
+    .publication-list{
+      background: #f3f8fa;
+      border-radius: 0px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      border-left: 6px solid #d9a78f;
+      margin-bottom: 7px;
+      padding: 1.5rem 1.5rem 1.2rem 1.5rem;
+      line-height: 1.5;
+    }
+    .container { max-width: 1200px; margin: 0 auto; }
 
-  /* the two section titles */
-  .section-title-mobile h3 {
-    font-size: 1.45rem !important;
-    line-height: 1.3;
-  }
+    .sort-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin: 30px 0;
+    }
+    .sort-buttons button {
+      padding: 8px 18px;
+      background-color: #4B3D63;
+      color: #fff;
+      font-weight: bold;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: 'Open Sans', sans-serif;
+      transition: background-color 0.3s ease;
+    }
+    .sort-buttons button:hover { background-color: #2e2e45; }
 
-  .section-title-mobile p{
-    font-size: .95rem !important;
-    line-height: 1.35;
-  }
+    /* === MOBILE FIX === */
+    @media (max-width: 900px) {
+      .header-topbar {
+        padding: 14px 22px;
+        position: fixed;
+        top: 0;
+        left: 0;
+      }
+      .hamburger { display: flex; margin-right: 40px; }
+      nav { display: none; }
+      .hero-text {
+        width: 300px !important;
+        top: 45% !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        text-align: center !important;
+      }
+      nav.active {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        position: fixed;
+        top: 10px; left: 90px;
+        width: 100%; height: 100%;
+        z-index: 9998;
+        padding-top: 100px;
+      }
+      nav.active ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.6rem;
+      }
+      nav.active ul li a {
+        color: white !important;
+        font-size: 1rem;
+        font-family: 'Georgia', serif;
+        text-decoration: none;
+      }
+      nav.active ul li a:hover { color: #d9a78f; }
 
-  /* major publications cards text size */
-  #pubScroll h3{
-    font-size: 1rem !important;
-    line-height: 1.25 !important;
-  }
+      /* mobile sizing */
+      .pubs-window { width: min(720px, calc(100vw - 110px)); }
+      .pub-card { width: 280px; min-height: 390px; }
+      .pub-card .pub-img { height: 190px; }
+    }
 
-  #pubScroll p{
-    font-size: .9rem !important;
-    line-height: 1.25 !important;
-  }
+    @media (max-width: 480px) {
+      .hero-text h1 { font-size: 1.5rem; }
+      .hero-text p { font-size: 0.85rem; }
+      .logo { font-size: 1.4rem; }
 
-  .publication-list{
-    padding: .9rem 1rem 1rem 1rem !important;
-  }
+      .pubs-window { width: calc(100vw - 90px); }
+      .pub-card { width: 250px; min-height: 370px; padding: 1.1rem; }
+      .pub-card .pub-img { height: 170px; }
+    }
 
-  .publication-list h4{
-    font-size: 1.05rem !important;
-    line-height: 1.25 !important;
-  }
-
-  .publication-list p{
-    font-size: .95rem !important;
-    line-height: 1.3 !important;
-  }
-}
-
-</style>
+    @media (max-width: 768px) {
+      .section-title-mobile h3 { font-size: 1.45rem !important; line-height: 1.3; }
+      .section-title-mobile p  { font-size: .95rem !important; line-height: 1.35; }
+      .publication-list { padding: .9rem 1rem 1rem 1rem !important; }
+      .publication-list h4 { font-size: 1.05rem !important; line-height: 1.25 !important; }
+      .publication-list p  { font-size: .95rem !important; line-height: 1.3 !important; }
+    }
+  </style>
 </head>
 
 <body>
-<div class="header-topbar" id="topbar">
-<div class="logo">Sidhu Lab</div>
-<div class="hamburger"><span></span><span></span><span></span></div>
-  <nav>
-    <ul>
-      <li><a href="index.html">Home</a></li>
-      <li><a href="research.html">Research</a></li>
-      <li><a href="publications.html">Publications</a></li>
-      <li><a href="people.html">People</a></li>
-      <!-- <li><a href="teaching.html">Teaching</a></li> -->
-      <li><a href="Latest News.html">Latest News</a></li>
-    </ul>
-  </nav>
-</div>
-
-<header  class="publications-hero">
-  <div class="hero-text">
-        <h1>Publications</h1>
-    <p>Advancing Plant Science, One Paper at a Time</p>
+  <div class="header-topbar" id="topbar">
+    <div class="logo">Sidhu Lab</div>
+    <div class="hamburger"><span></span><span></span><span></span></div>
+    <nav>
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="research.html">Research</a></li>
+        <li><a href="publications.html">Publications</a></li>
+        <li><a href="people.html">People</a></li>
+        <li><a href="Latest News.html">Latest News</a></li>
+      </ul>
+    </nav>
   </div>
-</header>
 
-
-<div class="section-title-mobile" style="max-width: 950px; margin: 40px auto 30px auto;">
-<h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63; border-left: 
-  6px solid #4B3D63; padding-left: 15px; margin-bottom: 0; text-align: left;"> Key Publications </h3></div>
-
-<div style="max-width: 1250px; margin: 0 auto;">
-  <div style="position: relative; overflow: hidden; padding: 2rem 0; background-color: #ffffff;">
-    <button onclick="scrollPublications(-1)" style="position: absolute; top: 45%; left: 0; background: none; border: none; font-size: 2rem;
-     color: #4B3D63; z-index: 2; cursor: pointer;">&#10094;</button>
-    <div id="pubScroll" style="display: flex; overflow-x: hidden; scroll-behavior: smooth; gap: 2rem; padding: 1rem 2rem;line-height: 1.3;">
-   
-    <!-- Publication 1 -->
-
-     <div style="min-width: 320px; background-color: #E6E6FA; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-       display: flex; flex-direction: column; justify-content: space-between;"><div><h3 style="color: #2e6171; font-family: 'Georgia', serif;">
-       <a href="https://doi.org/10.1111/tpj.16672" target="_blank" style="color: #2e6171; text-decoration: none;">Cortical cell size regulates 
-        root metabolic cost (2024)</a></h3><p><b>Authors:</b> Jagdeep Singh Sidhu, Jonathan P Lynch</p><p><b>Journal:</b> <em>Plant Physiology
-        </em></p></div><img src="img/p1.jpg" style="width: 100%; margin-top: 1rem;" />
+  <header class="publications-hero">
+    <div class="hero-text">
+      <h1>Publications</h1>
+      <p>Advancing Plant Science, One Paper at a Time</p>
     </div>
+  </header>
 
-    <!-- Publication 2 -->
-
-    <div style="min-width: 320px; background-color: #E6E6FA; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-      display: flex; flex-direction: column; justify-content: space-between;"><div><h3 style="color: #2e6171; font-family: 'Georgia', serif;">
-      <a href="https://doi.org/10.1093/jxb/erae191" target="_blank" style="color: #2e6171; text-decoration: none;">Cortical parenchyma wall
-        width regulates root metabolic cost (2024)</a></h3><p><b>Authors:</b> Jagdeep Singh Sidhu, Ivan Lopez-Valdivia, Christopher F Strock, 
-        Hannah M Schneider, Jonathan P Lynch</p><p><b>Journal:</b> <em>Journal of Experimental Botany</em></p></div><img src="img/p2.png" 
-        style="width: 100%; margin-top: 1rem;" >
-    </div>
-      
-  <!-- Publication 3 -->
-
-    <div style="min-width: 320px; background-color: #E6E6FA; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-      display: flex; flex-direction: column; justify-content: space-between;"><div><h3 style="color: #2e6171; font-family: 'Georgia', serif;">
-      <a href="https://doi.org/10.3389/fgene.2019.01345" target="_blank" style="color: #2e6171; text-decoration: none;">Genome-wide association 
-      study on coleoptile length in wheat (2020)</a></h3><p><b>Authors:</b> JS Sidhu, D Singh, HS Gill, NK Brar, Y Qiu, J Halder, RA Tameemi, B 
-      Turnipseed, SK Sehga</p><p><b>Journal:</b><em> Frontiers in Plant Science</em></p></div><img src="img/p3.jpg" style="width: 100%; margin-top: 1rem;">
-    </div>
-      
-  <!-- Publication 4 -->
-
-    <div style="min-width: 320px; background-color: #E6E6FA; padding: 1.5rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); 
-      display: flex; flex-direction: column; justify-content: space-between;"><div><h3 style="color: #2e6171; font-family: 'Georgia', serif;">
-      <a href="https://doi.org/10.1111/pce.14552" target="_blank" style="color: #2e6171; text-decoration: none;">RootSlice – A novel functional 
-        model for root anatomical phenotypes (2023)</a></h3><p><b>Authors:</b>Jagdeep Singh Sidhu, Ishan Ajmera, Sankalp Arya, Jonathan P Lynch</p>
-        <p><b>Journal:</b><em>Plant, Cell & Environment</em></p></div><img src="img/p4.png" style="width: 100%; margin-top: 1rem;"></div>
-    </div>
-
-  <!-- Right Arrow -->
-
-  <button onclick="scrollPublications(1)" style="position: absolute; top: 45%; right: 0; background: none; border: none; font-size: 2rem; color: #4B3D63; z-index: 2; 
-  cursor: pointer;">&#10095;</button></div></div>
-
-<!-- JavaScript for Scrolling -->
-
-<script>
-function scrollPublications(direction) {
-  const container = document.getElementById('pubScroll');
-  const scrollAmount = 400;
-  container.scrollBy({ left: direction * scrollAmount, behavior: 'smooth' });
-}
-</script>
-
-<!-- Section: All Publications Introduction -->
-<div class="section-title-mobile" style="max-width: 950px; margin: 40px auto 30px auto;">
-<h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63;  border-left: 
-6px solid #4B3D63; padding-left: 15px; margin-bottom: 0; text-align: left;">All Publications</h3></br><p style="font-size: 1.2rem; color: #333; font-family:'Georgia', 
-serif; line-height: 1.6; margin: 0;">Browse through our complete body of work — spanning diverse disciplines, collaborative studies, and emerging insights in crop 
-research and resilience.</p></div>
-
-<!-- Additional Publications List -->
-<div class="container mt-5">
-<div class="sort-buttons"><button onclick="sortList('citations')">Cited By</button><button onclick="sortList('year')">Year</button></div>
-
-<style>
-.sort-buttons {
-  display: flex; justify-content: center; gap: 10px; margin: 30px 0;
-}
-.sort-buttons button {
-  padding: 8px 18px; background-color: #4B3D63; color: #fff; font-weight: bold; border: none; border-radius: 4px; cursor: pointer; font-family: 'Open Sans', 
-  sans-serif; transition: background-color 0.3s ease;
-}
-.sort-buttons button:hover {
-  background-color: #2e2e45;
-}
-</style>
-
-<style>
-.publication-list{
-  background: #f3f8fa;border-radius: 0px; box-shadow: 0 2px 8px rgba(0,0,0,0.06); 
-  border-left: 6px solid #d9a78f; margin-bottom: 7px; padding:1.5rem 1.5rem 1.2rem 1.5rem; line-height: 1.5;
-}
-</style>
-
-<div class="row justify-content-center mt-4; col-md-15">
-  <div class="publication-list">
-    <ul id="publicationsList" class="list-unstyled">
-      <li data-citations="1" data-year="2024" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1101/2024.11.18.623787" 
-      target="_blank">In silico analysis of the evolution of root phenotypes during maize domestication in Neolithic soils of Tehuacán (2024)</a>
-      </h4><p class="text-dark">
-      <b>Authors:</b> Ivan Lopez-Valdivia, Miguel Vallebueno-Estrada, Harini Rangarajan, Kelly Swarts, Bruce F Benz, Michael Blake, Jagdeep Singh Sidhu, Sergio Perez-
-      Limon, Ruairidh JH Sawers, Hannah Schneider, Jonathan P Lynch<br><b>Journal:</b> bioRxiv<br><b>Total citations:</b> Cited by 1</p></li>
-      
-      <li data-citations="4" data-year="2024" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1093/jxb/erae191" 
-      target="_blank">Cortical parenchyma wall width regulates root metabolic cost and maize performance under suboptimal water availability (2024)</a></h4><p class="text-
-      dark"><b>Authors:</b> Jagdeep Singh Sidhu, Ivan Lopez-Valdivia, Christopher F Strock, Hannah M Schneider, Jonathan P Lynch<br><b>Journal:</b> Journal of Experimental 
-      Botany<br><b>Total citations:</b> Cited by 4</p></li>
-
-      <li data-citations="26" data-year="2024" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1007/s11104-023-06301-2" 
-      target="_blank"> Root phenotypes for improved nitrogen capture (2024)</a> </h4><p class="text-dark"><b>Authors:</b>Jonathan P Lynch, Tania Galindo-Castañeda, Hannah 
-      M Schneider, Jagdeep Singh Sidhu, Harini Rangarajan, Larry M York<br><b>Journal:</b> Plant and Soil<br><b>Total citations:</b> Cited by 26</p></li>
-
-      <li data-citations="2" data-year="2024" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://cshprotocols.cshlp.org/content/early/2024/08/30/pdb.prot108585.abstract" 
-      target="_blank">Root Anatomy: Preparing, Imaging, and Analyzing Maize Root Cross-Section (2024)</a></h4><p class="text-dark"><b>Authors:</b> Jagdeep Singh Sidhu, 
-      Hannah M SchneiderYork<br><b>Journal:</b> Cold Spring Harbor Protocols<br><b>Total citations:</b> Cited by 2</p></li>
-  
-      <li data-citations="2" data-year="2024" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://cshprotocols.cshlp.org/content/early/2024/08/30/pdb.top108454.abstract" 
-      target="_blank">Root Anatomical Imaging and Phenotyping in Maize (2024)</a></h4><p class="text-dark"><b>Authors:</b> Jagdeep Singh Sidhu, Hannah M Schneider</br>
-      <b>Journal:</b> Cold Spring Harbor Protocolsl</br> <b>Total citations:</b> Cited by 2</p></li>
-
-      <li data-citations="0" data-year="2023" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://scisoc.confex.com/scisoc/2023am/meetingapp.cgi/Paper/154050" target="_blank">
-      Exploring Global Wheat Core Set for Root Traits in Response to Climate Change (2023)</a></h4><p class="text-dark"><b>Authors:</b> Pradeep Kumar, Harsimardeep Gill, 
-      Jagdeep Singh Sidhu, Sunish K Sehgal</br><b>Journal:</b> ASA, CSSA, SSSA International Annual Meeting</p></li>
-                        
-      <li data-citations="4" data-year="2023" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1111/tpj.16478" 
-      target="_blank">A role for fermentation in aerobic conditions as revealed by computational analysis of maize root metabolism during growth by cell elongation (2023)
-      </a></h4><p class="text-dark"><b>Authors:</b> Hilary Hunt, Stefan Leape, Jagdeep Singh Sidhu, Ishan Ajmera, Jonathan P Lynch, R George Ratcliffe, Lee J Sweetlove
-      </br><b>Journal:</b> The Plant Journal</br> <b>Total citations:</b> Cited by 4</p></li>
-
-      <li data-citations="0" data-year="2023" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1111/tpj.16672" target="_blank">
-      Cortical cell size regulates root metabolic cost (2023)</a></h4><p class="text-dark"><b>Authors:</b>Jagdeep Singh Sidhu, Jonathan P Lynch</br><b>
-      Journal:</b>bioRxiv</p></li>
-
-      <li data-citations="17" data-year="2023" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1111/pce.14552" target="_blank">
-      RootSlice- A novel functional‐structural model for root anatomical phenotypes (2023)</a></h4><p class="text-dark"><b>Authors:</b> Jagdeep Singh Sidhu, Ishan 
-      Ajmera, Sankalp Arya, Jonathan P Lynch</br><b>Journal:</b>Plant, Cell & Environment</br> <b>Total citations:</b> Cited by 17</p></li>                            
-
-      <li data-citations="0" data-year="2023" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://www.proquest.com/docview/2887912444/fulltextPDF/D1BC4808D41D4FC6PQ/1?accoun
-      tid=28594&sourcetype=Dissertations%20&%20Theses" target="_blank">Subcellular Root Phenes Regulate Root Metabolic Cost (2023)</a></h4><p class="text-dark"><b>
-      Authors:</b> Jagdeep Singh Sidhu</br><b>Journal:</b> Agricultural and Environmental Plant Science</p></li>
-
-      <li data-citations="41" data-year="2022" style="list-style: none;"><h4 class="tm-text-blue"><a href=" https://doi.org/10.1111/pce.14175" target="_blank">
-      Soil penetration by maize roots is negatively related to ethylene‐induced thickening(2022)</a></h4><p class="text-dark"><b>Authors:</b>Dorien J Vanhees, Hannah 
-      M Schneider, Jagdeep Singh Sidhu, Kenneth W Loades, A Glyn Bengough, Malcolm J Bennett, Bipin K Pandey, Kathleen M Brown, Sacha J Mooney, Jonathan P Lynch</br>
-      <b>Journal:</b> Plant, Cell & Environment</br> <b>Total citations:</b> Cited by 41</p></li>
-
-      <li data-citations="190" data-year="2021" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1007/s11104-021-05010-y" 
-      target="_blank">Root anatomy and soil resource capture(2021)</a></h4><p class="text-dark"><b>Authors:</b> Jonathan P Lynch, Christopher F Strock, Hannah M Schneider, 
-      Jagdeep Singh Sidhu, Ishan Ajmera, Tania Galindo-Castañeda, Stephanie P Klein, Meredith T Hanlon</br><b>Journal:</b> Plant and Soil</br><b>Total citations:</b> 
-      Cited by 190</p></li>
-
-      <li data-citations="19" data-year="2021" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1038/s41598-021-91515-6" 
-      target="_blank">Genome-wide association analysis permits characterization of Stagonospora nodorum blotch (SNB) resistance in hard winter wheat (2021)</a></h4>
-      <p class="text-dark"><b>Authors:</b> Rami AlTameemi, Harsimardeep S Gill, Shaukat Ali, Girma Ayana, Jyotirmoy Halder, Jagdeep S Sidhu, Upinder S Gill, 
-      Brent Turnipseed, Jose L Gonzalez Hernandez, Sunish K Sehgal</br><b>Journal:</b> Scientific Reports</br> <b>Total citations:</b> Cited by 19</p></li>
-
-      <li data-citations="59" data-year="2021" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1111/nph.17214" 
-      target="_blank">Silencing the alarm: an insect salivary enzyme closes plant stomata and inhibits volatile release(2021)</a></h4><p class="text-dark"><b>Authors:</b> 
-      Po‐An Lin, Yintong Chen, Duverney Chaverra‐Rodriguez, Chan Chin Heu, Nursyafiqi Bin Zainuddin, Jagdeep Singh Sidhu, Michelle Peiffer, Ching‐Wen Tan, Anjel Helms, 
-      Donghun Kim, Jared Ali, Jason L Rasgon, Jonathan Lynch, Charles T Anderson, Gary W Felton</br><b>Journal:</b> New Phytologis</br> <b>Total citations:</b> Cited by 
-      58</p></li>
-
-      <li data-citations="108" data-year="2021" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.1073/pnas.2012087118" 
-      target="_blank">Multiseriate cortical sclerenchyma enhance root penetration in compacted soils (2021)</a></h4><p class="text-dark"><b>Authors:</b> Hannah M Schneider, 
-      Christopher F Strock, Meredith T Hanlon, Dorien J Vanhees, Alden C Perkins, Ishan B Ajmera, Jagdeep Singh Sidhu, Sacha J Mooney, Kathleen M Brown, 
-      Jonathan P Lynch</br><b>Journal:</b> Proceedings of the National Academy of Sciences</br> <b>Total citations:</b> Cited by 108</p></li>
-
-      <li data-citations="17" data-year="2020" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.34133/2020/3252703" target="_blank">
-      An analysis of soil coring strategies to estimate root depth in maize (Zea mays) and common bean (Phaseolus vulgaris) (2020)</a></h4><p class="text-dark">
-      <b>Authors:</b> James D Burridge, Christopher K Black, Eric A Nord, Johannes A Postma, Jagdeep S Sidhu, Larry M York, Jonathan P Lynch
-      </br><b>Journal:</b> Plant Phenomics</br> <b>Total citations:</b> Cited by 17</p></li>
-        
-      <li data-citations="41" data-year="2020" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.3389/fgene.2019.01345" 
-      target="_blank">Genome-wide association study uncovers novel genomic regions associated with coleoptile length in hard winter wheat (2020)</a></h4><p class="text-
-      dark"><b>Authors:</b>JS Sidhu, D Singh, HS Gill, NK Brar, Y Qiu, J Halder, RA Tameemi, B Turnipseed, SK Sehgal</br><b>Journal:</b> Frontiers in Plant Science</br>
-      <b>Total citations:</b> Cited by 41</p></li>
-
-      <li data-citations="0" data-year="2020" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.34133/2020/3252703" 
-       target= "_blank">Research Article An Analysis of Soil Coring Strategies to Estimate Root Depth in Maize (Zea mays) and Common Bean (Phaseolus vulgaris)(2020)</a>
-      </h4><p class="text-dark"><b>Authors:</b>James D Burridge, Christopher K Black, Eric A Nord, Johannes A Postma, Jagdeep S Sidhu, Larry M York, Jonathan P Lynch</br>
-      <b>Journal:</b> Plant Phenomics</p></li>
-
-      <li data-citations="47" data-year="2019" style="list-style: none;"><a href="https://doi.org/10.1186/s12870-019-2093-3" target="_blank">Mining and genomic characterization
-        of resistance to tan spot, Stagonospora nodorum blotch (SNB), and Fusarium head blight in Watkins core collection of wheat landraces(2019)</a></h4><p 
-        class="text-dark"><b>Authors:</b> Jyotirmoy Halder, Jinfeng Zhang, Shaukat Ali, Jagdeep S Sidhu, Harsimardeep S Gill, Shyamal K Talukder, Jonathan Kleinjan, 
-        Brent Turnipseed, Sunish K Sehgal</br><b>Journal:</b> BMC Plant Biology</br> <b>Total citations:</b> Cited by 47</p></li>
-		
-      <li data-citations="0" data-year="2019" style="list-style: none;"><a href="https://books.google.com/books?hl=en&lr=&id=4yWqDwAAQBAJ&oi=fnd&pg=PA168&ots=YBGwlyQ
-        0Tg&sig=VbQFMrtaT9qn9tf9Ol-Rv7bUfvE#v=onepage&q&f=false" target="_blank">Fine Mapping of the Wheat Leaf Rust Resistance (2019)</a></h4><p class="text-dark">
-        <b>Authors:</b> Gene Lr42, Harsimardeep S Gill, Chunxin Li, Jagdeep S Sidhu, Wenxuan Liu, Duane Wilson, Guihua Bai, Bikram S Gill, Sunish K Sehgal</br>
-        <b>Journal:</b> Molecular Advances in Wheat and Barley</p></li>
-
-      <li data-citations="23" data-year="2019" style="list-style: none;"><a href="https://doi.org/10.7717/peerj.7276" target="_blank">
-        Molecular characterization of bacterial leaf streak resistance in hard winter wheat (2019)</a></h4><p class="text-dark"><b>Authors:</b> Sai Mukund Ramakrishnan, 
-        Jagdeep Singh Sidhu, Shaukat Ali, Navjot Kaur, Jixiang Wu, Sunish K Sehgal</br><b>Journal:</b> PeerJ</br> <b>Total citations:</b> Cited by 23</p></li>
-
-      <li data-citations="45" data-year="2019" style="list-style: none;"><a href="https://doi.org/10.3390/ijms20102445" target="_blank">Fine Mapping of the Wheat Leaf 
-        Rust Resistance Gene Lr42 (2019)</a></h4><p class="text-dark"><b>Authors:</b> Harsimardeep S Gill, Chunxin Li, Jagdeep S Sidhu, Wenxuan Liu, Duane Wilson, 
-          Guihua Bai, Bikram S Gill, Sunish K Sehgal</br><b>Journal:</b> International Journal of Molecular Sciences</br> <b>Total citations:</b> Cited by 45</p></li>
-
-      <li data-citations="2" data-year="2019" style="list-style: none;"><a href="https://doi.org/10.1101/629832" target="_blank">Developmentally Regulated Genome 
-        Editing in Terminally Differentiated N2-Fixing Heterocysts of Anabaena cylindrica ATCC 29414 (2019)</a></h4><p class="text-dark">
-        <b>Authors:</b>Yeyan Qiu, Liping Gu, Shengni Tian, Jagdeep Sidhu, Jaimie Gibbons, Trevor Van Den Top, Jose L Gonzalez-Hernandez, 
-        Ruanbao Zhou</br><b>Journal:</b> bioRxiv</br> <b>Total citations:</b> Cited by 2</p></li>
-
-      <li data-citations="20" data-year="2019" style="list-style: none;"><a href="https://doi.org/10.1371/journal.pone.0214519" 
-      target="_blank">Assessing the genetic diversity 
-        and characterizing genomic regions conferring Tan Spot resistance in cultivated rye (2019) </a></h4><p class="text-dark">
-        <b>Authors:</b>Jagdeep Singh Sidhu, Sai Mukund Ramakrishnan, Shaukat Ali, Amy Bernardo, Guihua Bai, Sidrat Abdullah, Girma Ayana,
-        Sunish K Sehga</br><b>Journal:</b> PLoS One</br><b>Total citations:</b> Cited by 20</p></li>
-
-      <li data-citations="89" data-year="2018" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://doi.org/10.3389/fpls.2018.00926" target="_blank">Genome-wide association study 
-        for spot blotch resistance in hard winter wheat (2018)</a></h4><p class="text-dark"><b>Authors:</b>Girma T Ayana, Shaukat Ali, Jagdeep S Sidhu, Jose L Gonzalez
-           Hernandez, Brent Turnipseed, Sunish K Sehgal</br><b>Journal:</b> Frontiers in Plant Science</br> <b>Total citations:</b> Cited by 89</p></li>
-
-      <li data-citations="0" data-year="2018" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://www.proquest.com/docview/2103926489?accountid=28594&sourcetype=Dissertations%20&%20Theses" 
-      target="_blank">
-      Exploiting the Genetic Diversity of Wild Ancestors and Relatives of Wheat for Its Improvement (2018)</a></h4><p class="text-dark"><b>Authors:</b> Jagdeep Singh 
-      Sidhu</br><b>Journal:</b></p></li>
-
-      <li data-citations="0" data-year="2016" style="list-style: none;"><h4 class="tm-text-blue"><a href="https://scisoc.confex.com/scisoc/2016am/meetingapp.cgi/Paper/102706" target="_blank">Accessing Diversity in Rye 
-      (Secale cereale L.) and Its Potential for Crop Improvement (2016)</a></h4><p class="text-dark"><b>Authors:</b>Jagdeep Singh Sidhu, Sai Mukund Ramakrishnan, Sunish 
-      K Sehgal, Shaukat Ali, Guihua Bai, Paul St Amand</br><b>Journal:</b> ASA, CSSA and SSSA International Annual Meetings (2016)</br></p></li>
-
-      <!-- <li data-citations="0" data-year="2016" style="list-style: none;"><h4 class="tm-text-blue"><a href=" (LINK HERE)" target="_blank"> 
-          TITLE(ENTER YEAR)</a></h4><p class="text-dark"><b>Authors:(ENTER AUTHORS)</b></br><b>Journal:(ENTER JOURNAL NAME)</b><br> <b>Total citations:</b> Cited by 
-            (NO. OF CITATIONS) </p>
-      </li> -->
-      
-    </ul>
-    </div>
+  <div class="section-title-mobile" style="max-width: 950px; margin: 40px auto 30px auto;">
+    <h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63; border-left: 6px solid #4B3D63; padding-left: 15px; margin-bottom: 0; text-align: left;">
+      Key Publications
+    </h3>
   </div>
-</div>
 
-<script>
-  const publicationsList = document.getElementById('publicationsList');
-  const sortByCitations = document.getElementById('sortByCitations');
-  const sortByYear = document.getElementById('sortByYear');
+  <!-- ===== KEY PUBLICATIONS CAROUSEL (same behavior as Research; shows ~3 cards) ===== -->
+  <div class="pubs-wrapper">
+    <button class="pubs-arrow" onclick="scrollPubs(-1)">&#10094;</button>
 
-  function sortList(criteria) {
-    const items = Array.from(publicationsList.children);
-    items.sort((a, b) => {
-      const aValue = parseInt(a.dataset[criteria], 10);
-      const bValue = parseInt(b.dataset[criteria], 10);
-      return bValue - aValue; // Descending order
-    });
-    items.forEach(item => publicationsList.appendChild(item));
-  }
+    <div class="pubs-window">
+      <div id="pubTrack" class="pubs-track">
 
-  sortByCitations.addEventListener('click', () => sortList('citations'));
-  sortByYear.addEventListener('click', () => sortList('year'));
-</script>
+        <!-- Publication 1 -->
+        <div class="pub-card">
+          <div>
+            <h3>
+              <a href="https://doi.org/10.1111/tpj.16672" target="_blank">
+                Cortical cell size regulates root metabolic cost (2024)
+              </a>
+            </h3>
+            <p><b>Authors:</b> Jagdeep Singh Sidhu, Jonathan P Lynch</p>
+            <p><b>Journal:</b> <em>Plant Physiology</em></p>
+          </div>
+          <img class="pub-img" src="img/p1.jpg" alt="Publication 1">
+        </div>
 
-<style>
-  .container {
-    max-width: 1200px;
-    margin: 0 auto;
-  }
-  ul#publicationsList {
-    padding-left: 0;
-  }
-  ul#publicationsList li {
-    margin-bottom: 20px;
-  }
-</style>
-    </ul>
-  </div>
-</div>
-<script>
-  const topbar = document.getElementById('topbar');
-  window.addEventListener('scroll', () => {
-    topbar.classList.toggle('scrolled', window.scrollY > 50);
-  });
+        <!-- Publication 2 -->
+        <div class="pub-card">
+          <div>
+            <h3>
+              <a href="https://doi.org/10.1093/jxb/erae191" target="_blank">
+                Cortical parenchyma wall width regulates root metabolic cost (2024)
+              </a>
+            </h3>
+            <p><b>Authors:</b> Jagdeep Singh Sidhu, Ivan Lopez-Valdivia, Christopher F Strock, Hannah M Schneider, Jonathan P Lynch</p>
+            <p><b>Journal:</b> <em>Journal of Experimental Botany</em></p>
+          </div>
+          <img class="pub-img" src="img/p2.png" alt="Publication 2">
+        </div>
 
-  const hamburger = document.querySelector('.hamburger');
-  const nav = document.querySelector('.header-topbar nav');
-  hamburger.addEventListener('click', () => {
-    nav.classList.toggle('active');
-    hamburger.classList.toggle('active');
-  });
-  document.querySelectorAll('.header-topbar nav a').forEach(link => {
-    link.addEventListener('click', () => {
-      nav.classList.remove('active');
-      hamburger.classList.remove('active');
-    });
-  });
-</script>
+        <!-- Publication 3 -->
+        <div class="pub-card">
+          <div>
+            <h3>
+              <a href="https://doi.org/10.3389/fgene.2019.01345" target="_blank">
+                Genome-wide association study on coleoptile length in wheat (2020)
+              </a>
+            </h3>
+            <p><b>Authors:</b> JS Sidhu, D Singh, HS Gill, NK Brar, Y Qiu, J Halder, RA Tameemi, B Turnipseed, SK Sehgal</p>
+            <p><b>Journal:</b> <em>Frontiers in Plant Science</em></p>
+          </div>
+          <img class="pub-img" src="img/p3.jpg" alt="Publication 3">
+        </div>
 
-<footer class="site-footer">
-  <div class="footer-container">
-    <div class="footer-top">
-      <div class="footer-text">
-        <strong class="footer-lab-name">Sidhu Lab</strong> |
-        Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007
+        <!-- Publication 4 -->
+        <div class="pub-card">
+          <div>
+            <h3>
+              <a href="https://doi.org/10.1111/pce.14552" target="_blank">
+                RootSlice – A novel functional model for root anatomical phenotypes (2023)
+              </a>
+            </h3>
+            <p><b>Authors:</b> Jagdeep Singh Sidhu, Ishan Ajmera, Sankalp Arya, Jonathan P Lynch</p>
+            <p><b>Journal:</b> <em>Plant, Cell &amp; Environment</em></p>
+          </div>
+          <img class="pub-img" src="img/p4.png" alt="Publication 4">
+        </div>
+
       </div>
     </div>
-     <div class="footer-copy">
-      © 2025 Sidhu Lab. All rights reserved.
-    </div>
-    <a href="joinus.html" style="background-color:#d9a78f;color:white;padding:10px 24px;font-weight:bold;font-size:1.05rem;
-      text-decoration:none;border-radius:6px;">Join Sidhu Lab →
-    </a>
+
+    <button class="pubs-arrow" onclick="scrollPubs(1)">&#10095;</button>
   </div>
-</footer>
-<link rel="stylesheet" href="footer.css">
+
+  <!-- Section: All Publications Introduction -->
+  <div class="section-title-mobile" style="max-width: 950px; margin: 40px auto 30px auto;">
+    <h3 style="font-size: 2rem; font-weight: 700; font-family: 'Georgia', serif; color: #4B3D63; border-left: 6px solid #4B3D63; padding-left: 15px; margin-bottom: 0; text-align: left;">
+      All Publications
+    </h3>
+    <br>
+    <p style="font-size: 1.2rem; color: #333; font-family:'Georgia', serif; line-height: 1.6; margin: 0;">
+      Browse through our complete body of work — spanning diverse disciplines, collaborative studies, and emerging insights in crop research and resilience.
+    </p>
+  </div>
+
+  <!-- Additional Publications List -->
+  <div class="container mt-5">
+    <div class="sort-buttons">
+      <button onclick="sortList('citations')">Cited By</button>
+      <button onclick="sortList('year')">Year</button>
+    </div>
+
+    <div class="row justify-content-center mt-4; col-md-15">
+      <div class="publication-list">
+        <ul id="publicationsList" class="list-unstyled">
+
+          <li data-citations="1" data-year="2024" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1101/2024.11.18.623787" target="_blank">
+                In silico analysis of the evolution of root phenotypes during maize domestication in Neolithic soils of Tehuacán (2024)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Ivan Lopez-Valdivia, Miguel Vallebueno-Estrada, Harini Rangarajan, Kelly Swarts, Bruce F Benz, Michael Blake, Jagdeep Singh Sidhu, Sergio Perez-Limon, Ruairidh JH Sawers, Hannah Schneider, Jonathan P Lynch<br>
+              <b>Journal:</b> bioRxiv<br>
+              <b>Total citations:</b> Cited by 1
+            </p>
+          </li>
+
+          <li data-citations="4" data-year="2024" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1093/jxb/erae191" target="_blank">
+                Cortical parenchyma wall width regulates root metabolic cost and maize performance under suboptimal water availability (2024)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu, Ivan Lopez-Valdivia, Christopher F Strock, Hannah M Schneider, Jonathan P Lynch<br>
+              <b>Journal:</b> Journal of Experimental Botany<br>
+              <b>Total citations:</b> Cited by 4
+            </p>
+          </li>
+
+          <li data-citations="26" data-year="2024" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1007/s11104-023-06301-2" target="_blank">
+                Root phenotypes for improved nitrogen capture (2024)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jonathan P Lynch, Tania Galindo-Castañeda, Hannah M Schneider, Jagdeep Singh Sidhu, Harini Rangarajan, Larry M York<br>
+              <b>Journal:</b> Plant and Soil<br>
+              <b>Total citations:</b> Cited by 26
+            </p>
+          </li>
+
+          <li data-citations="2" data-year="2024" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://cshprotocols.cshlp.org/content/early/2024/08/30/pdb.prot108585.abstract" target="_blank">
+                Root Anatomy: Preparing, Imaging, and Analyzing Maize Root Cross-Section (2024)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu, Hannah M SchneiderYork<br>
+              <b>Journal:</b> Cold Spring Harbor Protocols<br>
+              <b>Total citations:</b> Cited by 2
+            </p>
+          </li>
+
+          <li data-citations="2" data-year="2024" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://cshprotocols.cshlp.org/content/early/2024/08/30/pdb.top108454.abstract" target="_blank">
+                Root Anatomical Imaging and Phenotyping in Maize (2024)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu, Hannah M Schneider<br>
+              <b>Journal:</b> Cold Spring Harbor Protocolsl<br>
+              <b>Total citations:</b> Cited by 2
+            </p>
+          </li>
+
+          <li data-citations="0" data-year="2023" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://scisoc.confex.com/scisoc/2023am/meetingapp.cgi/Paper/154050" target="_blank">
+                Exploring Global Wheat Core Set for Root Traits in Response to Climate Change (2023)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Pradeep Kumar, Harsimardeep Gill, Jagdeep Singh Sidhu, Sunish K Sehgal<br>
+              <b>Journal:</b> ASA, CSSA, SSSA International Annual Meeting
+            </p>
+          </li>
+
+          <li data-citations="4" data-year="2023" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1111/tpj.16478" target="_blank">
+                A role for fermentation in aerobic conditions as revealed by computational analysis of maize root metabolism during growth by cell elongation (2023)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Hilary Hunt, Stefan Leape, Jagdeep Singh Sidhu, Ishan Ajmera, Jonathan P Lynch, R George Ratcliffe, Lee J Sweetlove<br>
+              <b>Journal:</b> The Plant Journal<br>
+              <b>Total citations:</b> Cited by 4
+            </p>
+          </li>
+
+          <li data-citations="0" data-year="2023" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1111/tpj.16672" target="_blank">
+                Cortical cell size regulates root metabolic cost (2023)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu, Jonathan P Lynch<br>
+              <b>Journal:</b> bioRxiv
+            </p>
+          </li>
+
+          <li data-citations="17" data-year="2023" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1111/pce.14552" target="_blank">
+                RootSlice- A novel functional‐structural model for root anatomical phenotypes (2023)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu, Ishan Ajmera, Sankalp Arya, Jonathan P Lynch<br>
+              <b>Journal:</b> Plant, Cell &amp; Environment<br>
+              <b>Total citations:</b> Cited by 17
+            </p>
+          </li>
+
+          <li data-citations="0" data-year="2023" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://www.proquest.com/docview/2887912444/fulltextPDF/D1BC4808D41D4FC6PQ/1?accountid=28594&sourcetype=Dissertations%20&%20Theses" target="_blank">
+                Subcellular Root Phenes Regulate Root Metabolic Cost (2023)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu<br>
+              <b>Journal:</b> Agricultural and Environmental Plant Science
+            </p>
+          </li>
+
+          <li data-citations="41" data-year="2022" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1111/pce.14175" target="_blank">
+                Soil penetration by maize roots is negatively related to ethylene‐induced thickening (2022)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Dorien J Vanhees, Hannah M Schneider, Jagdeep Singh Sidhu, Kenneth W Loades, A Glyn Bengough, Malcolm J Bennett, Bipin K Pandey, Kathleen M Brown, Sacha J Mooney, Jonathan P Lynch<br>
+              <b>Journal:</b> Plant, Cell &amp; Environment<br>
+              <b>Total citations:</b> Cited by 41
+            </p>
+          </li>
+
+          <li data-citations="190" data-year="2021" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1007/s11104-021-05010-y" target="_blank">
+                Root anatomy and soil resource capture (2021)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jonathan P Lynch, Christopher F Strock, Hannah M Schneider, Jagdeep Singh Sidhu, Ishan Ajmera, Tania Galindo-Castañeda, Stephanie P Klein, Meredith T Hanlon<br>
+              <b>Journal:</b> Plant and Soil<br>
+              <b>Total citations:</b> Cited by 190
+            </p>
+          </li>
+
+          <li data-citations="19" data-year="2021" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1038/s41598-021-91515-6" target="_blank">
+                Genome-wide association analysis permits characterization of Stagonospora nodorum blotch (SNB) resistance in hard winter wheat (2021)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Rami AlTameemi, Harsimardeep S Gill, Shaukat Ali, Girma Ayana, Jyotirmoy Halder, Jagdeep S Sidhu, Upinder S Gill, Brent Turnipseed, Jose L Gonzalez Hernandez, Sunish K Sehgal<br>
+              <b>Journal:</b> Scientific Reports<br>
+              <b>Total citations:</b> Cited by 19
+            </p>
+          </li>
+
+          <li data-citations="59" data-year="2021" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1111/nph.17214" target="_blank">
+                Silencing the alarm: an insect salivary enzyme closes plant stomata and inhibits volatile release (2021)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Po‐An Lin, Yintong Chen, Duverney Chaverra‐Rodriguez, Chan Chin Heu, Nursyafiqi Bin Zainuddin, Jagdeep Singh Sidhu, Michelle Peiffer, Ching‐Wen Tan, Anjel Helms, Donghun Kim, Jared Ali, Jason L Rasgon, Jonathan Lynch, Charles T Anderson, Gary W Felton<br>
+              <b>Journal:</b> New Phytologis<br>
+              <b>Total citations:</b> Cited by 58
+            </p>
+          </li>
+
+          <li data-citations="108" data-year="2021" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1073/pnas.2012087118" target="_blank">
+                Multiseriate cortical sclerenchyma enhance root penetration in compacted soils (2021)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Hannah M Schneider, Christopher F Strock, Meredith T Hanlon, Dorien J Vanhees, Alden C Perkins, Ishan B Ajmera, Jagdeep Singh Sidhu, Sacha J Mooney, Kathleen M Brown, Jonathan P Lynch<br>
+              <b>Journal:</b> Proceedings of the National Academy of Sciences<br>
+              <b>Total citations:</b> Cited by 108
+            </p>
+          </li>
+
+          <li data-citations="17" data-year="2020" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.34133/2020/3252703" target="_blank">
+                An analysis of soil coring strategies to estimate root depth in maize (Zea mays) and common bean (Phaseolus vulgaris) (2020)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> James D Burridge, Christopher K Black, Eric A Nord, Johannes A Postma, Jagdeep S Sidhu, Larry M York, Jonathan P Lynch<br>
+              <b>Journal:</b> Plant Phenomics<br>
+              <b>Total citations:</b> Cited by 17
+            </p>
+          </li>
+
+          <li data-citations="41" data-year="2020" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.3389/fgene.2019.01345" target="_blank">
+                Genome-wide association study uncovers novel genomic regions associated with coleoptile length in hard winter wheat (2020)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> JS Sidhu, D Singh, HS Gill, NK Brar, Y Qiu, J Halder, RA Tameemi, B Turnipseed, SK Sehgal<br>
+              <b>Journal:</b> Frontiers in Plant Science<br>
+              <b>Total citations:</b> Cited by 41
+            </p>
+          </li>
+
+          <li data-citations="0" data-year="2020" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.34133/2020/3252703" target="_blank">
+                Research Article An Analysis of Soil Coring Strategies to Estimate Root Depth in Maize (Zea mays) and Common Bean (Phaseolus vulgaris) (2020)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> James D Burridge, Christopher K Black, Eric A Nord, Johannes A Postma, Jagdeep S Sidhu, Larry M York, Jonathan P Lynch<br>
+              <b>Journal:</b> Plant Phenomics
+            </p>
+          </li>
+
+          <li data-citations="47" data-year="2019" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1186/s12870-019-2093-3" target="_blank">
+                Mining and genomic characterization of resistance to tan spot, Stagonospora nodorum blotch (SNB), and Fusarium head blight in Watkins core collection of wheat landraces (2019)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jyotirmoy Halder, Jinfeng Zhang, Shaukat Ali, Jagdeep S Sidhu, Harsimardeep S Gill, Shyamal K Talukder, Jonathan Kleinjan, Brent Turnipseed, Sunish K Sehgal<br>
+              <b>Journal:</b> BMC Plant Biology<br>
+              <b>Total citations:</b> Cited by 47
+            </p>
+          </li>
+
+          <li data-citations="0" data-year="2019" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://books.google.com/books?hl=en&lr=&id=4yWqDwAAQBAJ&oi=fnd&pg=PA168&ots=YBGwlyQ0Tg&sig=VbQFMrtaT9qn9tf9Ol-Rv7bUfvE#v=onepage&q&f=false" target="_blank">
+                Fine Mapping of the Wheat Leaf Rust Resistance (2019)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Gene Lr42, Harsimardeep S Gill, Chunxin Li, Jagdeep S Sidhu, Wenxuan Liu, Duane Wilson, Guihua Bai, Bikram S Gill, Sunish K Sehgal<br>
+              <b>Journal:</b> Molecular Advances in Wheat and Barley
+            </p>
+          </li>
+
+          <li data-citations="23" data-year="2019" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.7717/peerj.7276" target="_blank">
+                Molecular characterization of bacterial leaf streak resistance in hard winter wheat (2019)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Sai Mukund Ramakrishnan, Jagdeep Singh Sidhu, Shaukat Ali, Navjot Kaur, Jixiang Wu, Sunish K Sehgal<br>
+              <b>Journal:</b> PeerJ<br>
+              <b>Total citations:</b> Cited by 23
+            </p>
+          </li>
+
+          <li data-citations="45" data-year="2019" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.3390/ijms20102445" target="_blank">
+                Fine Mapping of the Wheat Leaf Rust Resistance Gene Lr42 (2019)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Harsimardeep S Gill, Chunxin Li, Jagdeep S Sidhu, Wenxuan Liu, Duane Wilson, Guihua Bai, Bikram S Gill, Sunish K Sehgal<br>
+              <b>Journal:</b> International Journal of Molecular Sciences<br>
+              <b>Total citations:</b> Cited by 45
+            </p>
+          </li>
+
+          <li data-citations="2" data-year="2019" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1101/629832" target="_blank">
+                Developmentally Regulated Genome Editing in Terminally Differentiated N2-Fixing Heterocysts of Anabaena cylindrica ATCC 29414 (2019)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Yeyan Qiu, Liping Gu, Shengni Tian, Jagdeep Sidhu, Jaimie Gibbons, Trevor Van Den Top, Jose L Gonzalez-Hernandez, Ruanbao Zhou<br>
+              <b>Journal:</b> bioRxiv<br>
+              <b>Total citations:</b> Cited by 2
+            </p>
+          </li>
+
+          <li data-citations="20" data-year="2019" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.1371/journal.pone.0214519" target="_blank">
+                Assessing the genetic diversity and characterizing genomic regions conferring Tan Spot resistance in cultivated rye (2019)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu, Sai Mukund Ramakrishnan, Shaukat Ali, Amy Bernardo, Guihua Bai, Sidrat Abdullah, Girma Ayana, Sunish K Sehga<br>
+              <b>Journal:</b> PLoS One<br>
+              <b>Total citations:</b> Cited by 20
+            </p>
+          </li>
+
+          <li data-citations="89" data-year="2018" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://doi.org/10.3389/fpls.2018.00926" target="_blank">
+                Genome-wide association study for spot blotch resistance in hard winter wheat (2018)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Girma T Ayana, Shaukat Ali, Jagdeep S Sidhu, Jose L Gonzalez Hernandez, Brent Turnipseed, Sunish K Sehgal<br>
+              <b>Journal:</b> Frontiers in Plant Science<br>
+              <b>Total citations:</b> Cited by 89
+            </p>
+          </li>
+
+          <li data-citations="0" data-year="2018" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://www.proquest.com/docview/2103926489?accountid=28594&sourcetype=Dissertations%20&%20Theses" target="_blank">
+                Exploiting the Genetic Diversity of Wild Ancestors and Relatives of Wheat for Its Improvement (2018)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu<br>
+              <b>Journal:</b>
+            </p>
+          </li>
+
+          <li data-citations="0" data-year="2016" style="list-style: none;">
+            <h4 class="tm-text-blue">
+              <a href="https://scisoc.confex.com/scisoc/2016am/meetingapp.cgi/Paper/102706" target="_blank">
+                Accessing Diversity in Rye (Secale cereale L.) and Its Potential for Crop Improvement (2016)
+              </a>
+            </h4>
+            <p class="text-dark">
+              <b>Authors:</b> Jagdeep Singh Sidhu, Sai Mukund Ramakrishnan, Sunish K Sehgal, Shaukat Ali, Guihua Bai, Paul St Amand<br>
+              <b>Journal:</b> ASA, CSSA and SSSA International Annual Meetings (2016)
+            </p>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-top">
+        <div class="footer-text">
+          <strong class="footer-lab-name">Sidhu Lab</strong> |
+          Young Brothers Seed Technology Laboratory, SDSU, Brookings, SD 57007
+        </div>
+      </div>
+      <div class="footer-copy">
+        © 2025 Sidhu Lab. All rights reserved.
+      </div>
+      <a href="joinus.html" style="background-color:#d9a78f;color:white;padding:10px 24px;font-weight:bold;font-size:1.05rem;
+        text-decoration:none;border-radius:6px; display:inline-block; margin-top: 14px;">
+        Join Sidhu Lab →
+      </a>
+    </div>
+  </footer>
+
+  <link rel="stylesheet" href="footer.css">
+
+  <script>
+    // ===== Key Publications carousel (same behavior as Research) =====
+    const pubTrack = document.getElementById("pubTrack");
+
+    function getPubCardWidth() {
+      const card = pubTrack.querySelector(".pub-card");
+      if (!card) return 0;
+
+      const rect = card.getBoundingClientRect();
+      const style = window.getComputedStyle(pubTrack);
+      const gap = parseFloat(style.gap) || 0;
+
+      return rect.width + gap;
+    }
+
+    function scrollPubs(direction) {
+      const cardWidth = getPubCardWidth();
+      if (!cardWidth) return;
+
+      // right →
+      if (direction === 1) {
+        pubTrack.style.transition = "transform 0.4s ease";
+        pubTrack.style.transform = `translateX(-${cardWidth}px)`;
+
+        setTimeout(() => {
+          const first = pubTrack.firstElementChild;
+          pubTrack.appendChild(first);
+
+          pubTrack.style.transition = "none";
+          pubTrack.style.transform = "translateX(0)";
+        }, 400);
+      }
+      // left ←
+      else {
+        const last = pubTrack.lastElementChild;
+        pubTrack.insertBefore(last, pubTrack.firstElementChild);
+
+        pubTrack.style.transition = "none";
+        pubTrack.style.transform = `translateX(-${cardWidth}px)`;
+
+        requestAnimationFrame(() => {
+          pubTrack.style.transition = "transform 0.4s ease";
+          pubTrack.style.transform = "translateX(0)";
+        });
+      }
+    }
+  </script>
+
+  <script>
+    // ===== Sorting (works with your onclick buttons) =====
+    const publicationsList = document.getElementById('publicationsList');
+
+    function sortList(criteria) {
+      const items = Array.from(publicationsList.children);
+      items.sort((a, b) => {
+        const aValue = parseInt(a.dataset[criteria] || "0", 10);
+        const bValue = parseInt(b.dataset[criteria] || "0", 10);
+        return bValue - aValue;
+      });
+      items.forEach(item => publicationsList.appendChild(item));
+    }
+  </script>
+
+  <script>
+    // ===== Navbar scroll + hamburger =====
+    const topbar = document.getElementById('topbar');
+    window.addEventListener('scroll', () => {
+      topbar.classList.toggle('scrolled', window.scrollY > 50);
+    });
+
+    const hamburger = document.querySelector('.hamburger');
+    const nav = document.querySelector('.header-topbar nav');
+
+    hamburger.addEventListener('click', () => {
+      nav.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    });
+
+    document.querySelectorAll('.header-topbar nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        nav.classList.remove('active');
+        hamburger.classList.remove('active');
+      });
+    });
+  </script>
 </body>
-
-
-
+</html>
